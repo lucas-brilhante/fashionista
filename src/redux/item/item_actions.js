@@ -1,4 +1,4 @@
-import { FETCH_ITENS } from './const'
+import { FETCH_ITENS } from './consts'
 
 export const fetchItens = () => async (dispatch) => {
     const itens = [{
@@ -37,7 +37,7 @@ export const fetchItens = () => async (dispatch) => {
         price_off: '',
         sizes_available: ['P', 'G'],
     },
-    {
+    /*{
         id: "365rteqwwefe",
         img_url: 'https://d3ru0mmgfaaf43.cloudfront.net/Custom/Content/Products/50/44/504474_cropped-tenho-nem-roupa-para-isso-74957365934_m1_637042428549810565.jpg',
         name: 'Roupa 3',
@@ -45,7 +45,7 @@ export const fetchItens = () => async (dispatch) => {
         status: '',
         price_off: '',
         sizes_available: ['M', 'G'],
-    }]
+    }*/]
     console.log('teste')
     await dispatch({ type: FETCH_ITENS, payload: itens })
 }

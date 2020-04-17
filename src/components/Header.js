@@ -2,12 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import { FiSearch, FiShoppingBag } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setSearch } from 'redux/index';
 
-const Header = () => {
+const Header = ({setSearch}) => {
     const history = useHistory();
 
     const onClickLogo = () => {
         history.push("/");
+    }
+
+    const handleSearchClick = () =>{
+        setSearch(true);
     }
 
     return (
@@ -17,7 +23,7 @@ const Header = () => {
                     FASHIONISTA
                 </Logo>
                 <IconGroup>
-                    <SearchIcon />
+                    <SearchIcon onClick={handleSearchClick} />
                     <ShoppingBagIcon />
                 </IconGroup>
             </HeaderContent>
@@ -28,6 +34,10 @@ const Header = () => {
 const HeaderBackground = styled.header`
     background: #fff;
     display: flex;
+    width: 100%;
+    position: fixed;
+    z-index: 20;
+    height: 64px;
 `;
 
 const HeaderContent = styled.div`
@@ -73,4 +83,8 @@ const ShoppingBagIcon = styled(FiShoppingBag)
     }
 `;
 
-export default Header;
+const mapDispatchToProps = dispatch => ({
+    setSearch: (value) => dispatch(setSearch(value))
+});
+
+export default connect(null, mapDispatchToProps)(Header);

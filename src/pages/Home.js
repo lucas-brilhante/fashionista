@@ -1,17 +1,11 @@
-import React, { useState } from 'react';
-import { Dialog } from 'components';
+import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { getPercentageDiscount, brlMask } from 'utils';
 import { useHistory } from 'react-router-dom';
 
-const Main = ({ itens }) => {
-  const [dialog, setDialog] = useState(false);
+const Home = ({ itens }) => {
   const history = useHistory();
-
-  const closeDialog = () => {
-    setDialog(false);
-  }
 
   const handleClick = (id) => () =>{
     history.push(`/product/${id}`)
@@ -19,7 +13,6 @@ const Main = ({ itens }) => {
 
   return (
     <HomeContent>
-      <Dialog active={dialog} component={() => <h1>dialog</h1>} closeDialog={closeDialog} />
       <NumberOfItens>{itens.length} Itens</NumberOfItens>
       <ItensGrid>
         {itens.map((item) => (
@@ -141,4 +134,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, null)(Main);
+export default connect(mapStateToProps, null)(Home);

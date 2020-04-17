@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import {Header} from 'components';
-import {Home, ProductInfo} from 'pages';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from 'redux/store';
 import {fetchItens} from 'redux/index';
+import { Header, Main } from 'components';
 
 
 const App = () => {
@@ -14,10 +13,7 @@ const App = () => {
             <Fragment>
                 <BrowserRouter>
                     <Header />
-                    <Switch>
-                        <Route path="/" exact component={Home} />
-                        <Route path="/product/:id" component={ProductInfo} />
-                    </Switch>
+                    <Main />
                 </BrowserRouter>
             </Fragment>
         </Provider>

@@ -1,4 +1,4 @@
-import { FETCH_ITENS } from './const';
+import { FETCH_ITENS } from './consts';
 import createReducer from '../createReducer';
 const initialState = [];
 
