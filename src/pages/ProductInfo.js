@@ -1,52 +1,48 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { findItem } from 'redux/index';
 import { connect } from 'react-redux';
-import { brlMask } from 'utils';
+import { getNumbers } from 'utils';
 
 const ProductInfo = ({ findItem }) => {
     const [size_selected, setSizeSelected] = useState('');
     const item = findItem(useParams().id);
 
-    useEffect(()=>{
-        setSizeSelected(item.sizes_available[0])
-    },[item.sizes_available])
-
     const handleClick = (size) => () => {
         setSizeSelected(size);
     }
 
-    return (
-        <ProductContainer>
-            <ProductImg src={item.img_url} />
-            <ProductInfoContainer>
-                <ProductName>{item.name}</ProductName>
-                <ProductValueContainer>
-                    <ProductValue>
-                        {brlMask(item.price_off!==''?item.price_off:item.price)}
-                        <ProductParcel> em até 3x de R$ 30,00</ProductParcel>
-                    </ProductValue>
-                </ProductValueContainer>
-                <ProductSizeText>Escolha o tamanho</ProductSizeText>
-                <ProductSizesContainer>
-                    {['P', 'M', 'G'].map((size) => {
-                        if (item.sizes_available.includes(size))
+    if (item)
+        return (
+            <ProductContainer>
+                <ProductImg src={item.image} />
+                <ProductInfoContainer>
+                    <ProductName>{item.name}</ProductName>
+                    <ProductValueContainer>
+                        <ProductValue>
+                            <ProductParcel> em até {item.installments}</ProductParcel>
+                        </ProductValue>
+                    </ProductValueContainer>
+                    <ProductSizeText>Escolha o tamanho</ProductSizeText>
+                    <ProductSizesContainer>
+                    {item.sizes.map((size) => {
+                        if (size.available)
                             return (
-                                <ProductSize key={size}
-                                    actived={size_selected === size}
-                                    onClick={handleClick(size)}>
-
-                                    {size}
+                                <ProductSize key={size.sku}
+                                    actived={size_selected === size.size}
+                                    onClick={handleClick(size.size)}>
+                                    {size.size}
                                 </ProductSize>
                             )
-                        return <Fragment key={size} />
+                        return <Fragment key={size.sku} />
                     })}
                 </ProductSizesContainer>
-                <AddProductToCard>Adicionar à Sacola</AddProductToCard>
-            </ProductInfoContainer>
-        </ProductContainer>
-    )
+                    <AddProductToCard>Adicionar à Sacola</AddProductToCard>
+                </ProductInfoContainer>
+            </ProductContainer>
+        )
+    return null
 }
 
 const ProductContainer = styled.div`

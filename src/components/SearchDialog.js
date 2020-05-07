@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FiArrowLeft } from 'react-icons/fi';
-import { brlMask } from 'utils';
+import { getNumbers } from 'utils';
 import { connect } from 'react-redux'
 import { SearchItem } from 'redux/index';
 import {useHistory} from 'react-router-dom';
@@ -17,6 +17,8 @@ const SearchDialog = ({ itens_searched, SearchItem }) => {
     const handleItemClick = (item_id) => () =>{
         history.push(`/product/${item_id}`)
     }
+
+    console.log('item', itens_searched)
 
     return (
         <SerchContent>
@@ -34,12 +36,12 @@ const SearchDialog = ({ itens_searched, SearchItem }) => {
                 {itens_searched.map((item) =>
                     <Item key={item.id} onClick={handleItemClick(item.id)}>
                         <ItemInfoGroup>
-                            <ItemImage src={item.img_url} />
+                            <ItemImage src={item.image} />
                             <ItemName>{item.name}</ItemName>
                         </ItemInfoGroup>
                         <ItemValueGroup>
-                            <ItemPrice>{brlMask(item.price_off !== '' ? item.price_off : item.price)}</ItemPrice>
-                            <ItemParcelPrice>3x de {brlMask(30)}</ItemParcelPrice>
+                            <ItemPrice>{getNumbers(item.actual_price < item.regular_price ? item.actual_price : item.regular_price)}</ItemPrice>
+                            <ItemParcelPrice>{item.installments}</ItemParcelPrice>
                         </ItemValueGroup>
                     </Item>
                 )}

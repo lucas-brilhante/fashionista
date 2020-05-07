@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { getPercentageDiscount, brlMask } from 'utils';
+import { getPercentageDiscount, getNumbers } from 'utils';
 import { useHistory } from 'react-router-dom';
 
 const Home = ({ itens }) => {
   const history = useHistory();
 
-  const handleClick = (id) => () =>{
+  const handleClick = (id) => () => {
     history.push(`/product/${id}`)
   }
 
@@ -15,29 +15,33 @@ const Home = ({ itens }) => {
     <HomeContent>
       <NumberOfItens>{itens.length} Itens</NumberOfItens>
       <ItensGrid>
-        {itens.map((item) => (
-          <Item key={item.id} onClick={handleClick(item.id)}>
-            <ImageContainer>
-              <ItemImage src={item.img_url} />
-              {item.price_off > 0 && item.price_off < item.price &&
-                <Discount>- {getPercentageDiscount(item.price_off, item.price)}%</Discount>}
-            </ImageContainer>
-            <ItemName>{item.name}</ItemName>
-            { item.price_off > 0 && item.price_off < item.price &&
-              <PriceContainer>
-                    <ItemPrice2>{brlMask(item.price)}</ItemPrice2>
-                    <ItemPrice>{brlMask(item.price_off)}</ItemPrice>
-              </PriceContainer>
-            }
+        {itens.map((item,index) => {
+          const actual_price = getNumbers(item.actual_price);
+          const regular_price = getNumbers(item.regular_price);
+          return (
+            <Item key={item.id} onClick={handleClick(item.id)}>
+              <ImageContainer>
+                <ItemImage src={item.image} />
+                {actual_price < regular_price &&
+                  <Discount>- {getPercentageDiscount(actual_price, regular_price)}%</Discount>}
+              </ImageContainer>
+              <ItemName>{item.name}</ItemName>
 
-            { !(item.price_off > 0 && item.price_off < item.price) &&
-              <PriceContainer>
-                    <ItemPrice>{brlMask(item.price)}</ItemPrice>
-              </PriceContainer>
-            }
+              {actual_price < regular_price &&
+                <PriceContainer>
+                  <ItemPrice2>{item.regular_price}</ItemPrice2>
+                  <ItemPrice>{item.actual_price}</ItemPrice>
+                </PriceContainer>
+              }
 
-          </Item>
-        ))}
+              {!(actual_price < regular_price) &&
+                <PriceContainer>
+                  <ItemPrice>{item.regular_price}</ItemPrice>
+                </PriceContainer>
+              }
+            </Item>
+          )
+        })}
       </ItensGrid>
     </HomeContent>
   );
@@ -87,12 +91,14 @@ const ImageContainer = styled.div`
   display: flex;
   position: relative;
   justify-content: flex-end;
+  width: 100%;
 `;
 
 const ItemImage = styled.img
   .attrs({ alt: 'Item Image' })`
   width: 100%;
-  height: auto;
+  height: 300px;
+  padding: 5px;
 `;
 
 const Discount = styled.div`
