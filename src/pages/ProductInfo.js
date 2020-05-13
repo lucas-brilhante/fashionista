@@ -1,28 +1,42 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import { findItem } from 'redux/index';
+import { showCart, findItem, addItemToCard } from 'redux/index';
 import { connect } from 'react-redux';
-import { getNumbers } from 'utils';
 
-const ProductInfo = ({ findItem }) => {
-    const [size_selected, setSizeSelected] = useState('');
+const ProductInfo = ({ showCart, findItem, addItemToCard }) => {
     const item = findItem(useParams().id);
+    const [size_selected, setSizeSelected] = useState('');
 
     const handleClick = (size) => () => {
         setSizeSelected(size);
     }
 
-    if (item)
+    const addItem = (item, size) => () => {
+        addItemToCard(item, size);
+        showCart(true);
+    }
+
+    useEffect(()=>{
+        if(item){
+            for(let size of item.sizes){
+                if(size.available){
+                    setSizeSelected(size.size);
+                    break;
+                }
+            }
+        }
+    },[item])
+
+    if (item){
         return (
             <ProductContainer>
                 <ProductImg src={item.image} />
                 <ProductInfoContainer>
                     <ProductName>{item.name}</ProductName>
                     <ProductValueContainer>
-                        <ProductValue>
-                            <ProductParcel> em até {item.installments}</ProductParcel>
-                        </ProductValue>
+                        <ProductValue>{item.actual_price}</ProductValue>
+                        <ProductParcel> em até {item.installments}</ProductParcel>
                     </ProductValueContainer>
                     <ProductSizeText>Escolha o tamanho</ProductSizeText>
                     <ProductSizesContainer>
@@ -38,10 +52,11 @@ const ProductInfo = ({ findItem }) => {
                         return <Fragment key={size.sku} />
                     })}
                 </ProductSizesContainer>
-                    <AddProductToCard>Adicionar à Sacola</AddProductToCard>
+                    <AddProductToCard onClick={addItem(item,size_selected)}>Adicionar à Sacola</AddProductToCard>
                 </ProductInfoContainer>
             </ProductContainer>
         )
+    }
     return null
 }
 
@@ -53,12 +68,11 @@ const ProductContainer = styled.div`
     height: 100%;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 20px;
 `;
 
 const ProductImg = styled.img.attrs({ alt: 'Product Image' })`
     width: calc(250px + 15vw);
-    margin: 20px 20px 0 20px;
+    margin: 15px 20px 0 20px;
     box-shadow: 0px 0px 15px 0px rgba(0,0,0,1);
     border-radius: 12px;
 `;
@@ -82,9 +96,10 @@ const ProductValueContainer = styled.div`
 `;
 
 const ProductValue = styled.span`
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 600;
     margin-bottom: 20px;
+    margin-right: 10px;
 `;
 
 const ProductParcel = styled.span`
@@ -149,7 +164,9 @@ const AddProductToCard = styled.button`
 
 
 const mapDispatchToProps = dispatch => ({
-    findItem: (item_id) => dispatch(findItem(item_id))
+    showCart: (value) => dispatch(showCart(value)),
+    findItem: (item_id) => dispatch(findItem(item_id)),
+    addItemToCard: (item, size) => dispatch(addItemToCard(item, size))
 })
 
 export default connect(null, mapDispatchToProps)(ProductInfo);

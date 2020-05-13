@@ -3,17 +3,23 @@ import styled from 'styled-components';
 import { FiSearch, FiShoppingBag } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setSearch } from 'redux/index';
+import { setSearch, showCart } from 'redux/index';
 
-const Header = ({setSearch}) => {
+const Header = ({ cart_itens, itens_total_qty, setSearch, showCart }) => {
     const history = useHistory();
 
     const onClickLogo = () => {
         history.push("/");
     }
 
-    const handleSearchClick = () =>{
+    const handleSearchClick = () => {
         setSearch(true);
+        showCart(false);
+    }
+
+    const handleCartClick = () => {
+        showCart(true);
+        setSearch(false);
     }
 
     return (
@@ -24,7 +30,10 @@ const Header = ({setSearch}) => {
                 </Logo>
                 <IconGroup>
                     <SearchIcon onClick={handleSearchClick} />
-                    <ShoppingBagIcon />
+                    <BagGroup onClick={handleCartClick}>
+                        <BagCount>{itens_total_qty}</BagCount>
+                        <ShoppingBagIcon />
+                    </BagGroup>
                 </IconGroup>
             </HeaderContent>
         </HeaderBackground>
@@ -73,18 +82,46 @@ const SearchIcon = styled(FiSearch)
     }
 `;
 
-const ShoppingBagIcon = styled(FiShoppingBag)
-    .attrs({ size: 18 })`
-    cursor: pointer;
+const BagGroup = styled.div`
+    display: flex;
+    position: relative;
     padding: 5px;
     margin: 8px;
+    cursor: pointer;
     &:hover {
         color: red;
     }
 `;
 
-const mapDispatchToProps = dispatch => ({
-    setSearch: (value) => dispatch(setSearch(value))
+const ShoppingBagIcon = styled(FiShoppingBag)
+    .attrs({ size: 18 })`
+`;
+
+const BagCount = styled.div`
+    display: flex;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: red;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 15px;
+    bottom: 15px;
+`;
+
+const mapStateToProps = state => ({
+    cart_itens: state.cartReducer.cart_itens,
+    itens_total_qty: state.cartReducer.itens_total_qty
 });
 
-export default connect(null, mapDispatchToProps)(Header);
+const mapDispatchToProps = dispatch => ({
+    setSearch: (value) => dispatch(setSearch(value)),
+    showCart: (value) => dispatch(showCart(value))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

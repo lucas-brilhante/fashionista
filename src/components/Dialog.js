@@ -28,8 +28,8 @@ const Dialog = ({ component, active, closeDialog }) => {
             <DialogBackground onKeyDown={handleKeyPress} tabIndex={-1} onClick={handleClick} />
             <DialogContainer >
                 <DialogContent>
-                <DummyContainer>aaaa</DummyContainer>
-                    <Component />
+                <DummyContainer/>
+                    <Component closeDialog={closeDialog}/>
                 </DialogContent>
             </DialogContainer>
         </Fragment>
@@ -39,7 +39,7 @@ const Dialog = ({ component, active, closeDialog }) => {
 
 const DialogContainer = styled.div`
     display: flex;
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
@@ -49,6 +49,7 @@ const DialogContainer = styled.div`
     margin: 0 auto;
     max-width: 1080px;
     justify-content: flex-end;
+    z-index: 10;
 `;
 
 const DummyContainer = styled.div`
@@ -61,7 +62,7 @@ const DialogBackground = styled.div`
     justify-content: flex-end;
     background: rgba(0, 0, 0, 0.6);
     color: red;
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     top: 0;

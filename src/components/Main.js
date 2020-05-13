@@ -3,18 +3,22 @@ import { Switch, Route } from 'react-router-dom';
 import { Home, ProductInfo } from 'pages';
 import { Dialog } from 'components';
 import { connect } from 'react-redux';
-import { setSearch, fetchItens } from 'redux/index';
+import { setSearch, fetchItens, showCart } from 'redux/index';
 import styled from 'styled-components';
-import { SearchDialog } from 'components';
+import { SearchDialog, CartDialog } from 'components';
 
-const Main = ({ search_bar, itens, setSearch, fetchItens }) => {
+const Main = ({ search_bar,show_cart, itens, setSearch, fetchItens, showCart }) => {
 
     useEffect(() => {
         fetchItens()
     }, [fetchItens])
 
-    const closeDialog = () => {
+    const closeSearchDialog = () => {
         setSearch(false);
+    }
+
+    const closeCartDialog = () => {
+        showCart(false);
     }
 
     if (itens)
@@ -22,7 +26,8 @@ const Main = ({ search_bar, itens, setSearch, fetchItens }) => {
             <Fragment>
                 <DummyContainer height={64} />
                 <MainContent>
-                    <Dialog active={search_bar} component={SearchDialog} closeDialog={closeDialog} />
+                    <Dialog active={search_bar} component={SearchDialog} closeDialog={closeSearchDialog} />
+                    <Dialog active={show_cart} component={CartDialog} closeDialog={closeCartDialog} />
                     <Switch>
                         <Route path="/" exact component={Home} />
                         <Route path="/product/:id" component={ProductInfo} />
@@ -46,12 +51,14 @@ const MainContent = styled.main`
 
 const mapStateToProps = state => ({
     search_bar: state.searchReducer.search_bar,
+    show_cart: state.cartReducer.show_cart,
     itens: state.itemReducer
 });
 
 const mapDispatchToProps = dispatch => ({
     setSearch: (value) => dispatch(setSearch(value)),
-    fetchItens: () => dispatch(fetchItens())
+    fetchItens: () => dispatch(fetchItens()),
+    showCart: (value) => dispatch(showCart(value))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

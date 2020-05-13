@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ADD_ITEM, FETCH_ITENS } from './consts';
+import { ADD_ITEM } from './consts';
 import { getProductId } from 'utils';
 
 export const fetchItens = () => async (dispatch) => {

@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { SearchItem } from 'redux/index';
 import {useHistory} from 'react-router-dom';
 
-const SearchDialog = ({ itens_searched, SearchItem }) => {
+const SearchDialog = ({ itens_searched, SearchItem, closeDialog }) => {
     const history = useHistory();
 
     const handleSearch = (e) => {
@@ -18,12 +18,14 @@ const SearchDialog = ({ itens_searched, SearchItem }) => {
         history.push(`/product/${item_id}`)
     }
 
-    console.log('item', itens_searched)
+    const closePopup = () =>{
+        closeDialog()
+    }
 
     return (
         <SerchContent>
             <SearchHeader>
-                <ArrowLeftIcon />
+                <ArrowLeftIcon onClick={closePopup}/>
                 <SearchText>Buscar Produtos</SearchText>
             </SearchHeader>
             <SearchInputContainer>
@@ -35,12 +37,12 @@ const SearchDialog = ({ itens_searched, SearchItem }) => {
             <ItemList>
                 {itens_searched.map((item) =>
                     <Item key={item.id} onClick={handleItemClick(item.id)}>
-                        <ItemInfoGroup>
-                            <ItemImage src={item.image} />
+                        <ItemImage src={item.image} />
+                        <ItemInfoGroup width={100}>
                             <ItemName>{item.name}</ItemName>
                         </ItemInfoGroup>
                         <ItemValueGroup>
-                            <ItemPrice>{getNumbers(item.actual_price < item.regular_price ? item.actual_price : item.regular_price)}</ItemPrice>
+                            <ItemPrice>{(item.actual_price < item.regular_price) ? item.actual_price : item.regular_price}</ItemPrice>
                             <ItemParcelPrice>{item.installments}</ItemParcelPrice>
                         </ItemValueGroup>
                     </Item>
@@ -54,7 +56,7 @@ const SerchContent = styled.div`
     display: flex;
     background: #ddd;
     flex-direction: column;
-    width: 300px;
+    width: 320px;
     box-shadow: 0 0 15px 0 rgba(255, 255, 255, 0.8);
 `;
 
@@ -123,6 +125,7 @@ const ItemInfoGroup = styled.div`
     display: flex;
     flex-direction: row;
     margin-right: auto;
+    width: ${({width}) => width?width+'px':'auto'};
 `;
 
 const ItemImage = styled.img.attrs({ alt: 'Item Image' })`
@@ -144,10 +147,11 @@ const ItemValueGroup = styled.div`
 
 const ItemPrice = styled.span`
     font-weight: bold;
+    font-size: 15px;
 `;
 
 const ItemParcelPrice = styled.span`
-    font-size: 11px;
+    font-size: 13px;
     color: #333;
 `;
 
