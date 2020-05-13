@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FiArrowLeft } from 'react-icons/fi';
-import { getNumbers } from 'utils';
 import { connect } from 'react-redux'
 import { SearchItem } from 'redux/index';
 import {useHistory} from 'react-router-dom';

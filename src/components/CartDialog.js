@@ -4,7 +4,9 @@ import { FiArrowLeft } from 'react-icons/fi';
 import { connect } from 'react-redux'
 import { changeQty, removeItem } from 'redux/index';
 
-const CartDialog = ({ cart_itens, cart_total_price, changeQty, removeItem, closeDialog }) => {
+const CartDialog = ({ cart_total_price, changeQty, removeItem, closeDialog }) => {
+    const cart_itens = JSON.parse(localStorage.getItem('@fashionista/cart_itens'));
+
     const addQty = (item_id, item_qty) => () => {
         changeQty(item_id, item_qty+1);
     }
@@ -26,10 +28,10 @@ const CartDialog = ({ cart_itens, cart_total_price, changeQty, removeItem, close
         <CartContent>
             <CartHeader>
                 <ArrowLeftIcon onClick={closePopup}/>
-                <SearchText>Sacola({cart_itens.length})</SearchText>
+                <SearchText>Sacola({cart_itens?cart_itens.length:'0'})</SearchText>
             </CartHeader>
             <ItemList>
-                {cart_itens.map((item) =>{
+                {cart_itens && cart_itens.map((item) =>{
                     return <Item key={item.id}>
                         <ItemInfoGroup>
                             <ItemImage src={item.image} />
@@ -189,7 +191,6 @@ const CartTotalValue = styled.div`
 `;
 
 const mapStateToProps = state => ({
-    cart_itens: state.cartReducer.cart_itens,
     cart_total_price: state.cartReducer.total_price
 });
 

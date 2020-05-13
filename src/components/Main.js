@@ -3,15 +3,16 @@ import { Switch, Route } from 'react-router-dom';
 import { Home, ProductInfo } from 'pages';
 import { Dialog } from 'components';
 import { connect } from 'react-redux';
-import { setSearch, fetchItens, showCart } from 'redux/index';
+import { setSearch, fetchItens, showCart, reloadTotalPrice } from 'redux/index';
 import styled from 'styled-components';
 import { SearchDialog, CartDialog } from 'components';
 
-const Main = ({ search_bar,show_cart, itens, setSearch, fetchItens, showCart }) => {
+const Main = ({ search_bar,show_cart, itens, setSearch, fetchItens, showCart, reloadTotalPrice }) => {
 
     useEffect(() => {
-        fetchItens()
-    }, [fetchItens])
+        fetchItens();
+        reloadTotalPrice();
+    }, [fetchItens, reloadTotalPrice])
 
     const closeSearchDialog = () => {
         setSearch(false);
@@ -58,7 +59,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setSearch: (value) => dispatch(setSearch(value)),
     fetchItens: () => dispatch(fetchItens()),
-    showCart: (value) => dispatch(showCart(value))
+    showCart: (value) => dispatch(showCart(value)),
+    reloadTotalPrice: () => dispatch(reloadTotalPrice())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

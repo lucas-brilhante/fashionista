@@ -1,13 +1,16 @@
-import { SHOW_CART, CHANGE_QTY, REMOVE_ITEM, ADD_ITEM_TO_CARD, SET_TOTAL_PRICE, SET_ITENS_QTY } from './consts';
-import {getNumbers, currencyMask} from 'utils';
+import { SHOW_CART, SET_TOTAL_PRICE, SET_ITENS_QTY } from './consts';
+import { getNumbers, currencyMask } from 'utils';
 
 export const showCart = (value) => ({
     type: SHOW_CART,
     payload: value
 })
 
-export const changeQty = (item_id, qty) => (dispatch, store) => {
-    let cart = store().cartReducer.cart_itens.slice();
+export const changeQty = (item_id, qty) => (dispatch) => {
+    let cart = JSON.parse(localStorage.getItem('@fashionista/cart_itens'));
+
+    if (cart)
+        cart = cart.slice();
 
     for (let item of cart) {
         if (item.id === item_id) {
@@ -15,33 +18,31 @@ export const changeQty = (item_id, qty) => (dispatch, store) => {
         }
     }
 
-    dispatch({
-        type: CHANGE_QTY,
-        payload: cart
-    })
+    localStorage.setItem('@fashionista/cart_itens', JSON.stringify(cart));
     dispatch(reloadTotalPrice());
 }
 
-export const removeItem = (item_id) => (dispatch, store) => {
-    let cart = store().cartReducer.cart_itens.slice();
+export const removeItem = (item_id) => (dispatch) => {
+    let cart = JSON.parse(localStorage.getItem('@fashionista/cart_itens'));
 
-    cart = cart.filter((item) => item.id !== item_id);
+    if(cart)
+        cart = cart.slice().filter((item) => item.id !== item_id);
 
-    dispatch({
-        type: REMOVE_ITEM,
-        payload: cart
-    });
-
+    localStorage.setItem('@fashionista/cart_itens', JSON.stringify(cart));
     dispatch(reloadTotalPrice());
 
 }
 
-export const addItemToCard = (item, size) => (dispatch, store) => {
+export const addItemToCard = (item, size) => (dispatch) => {
     const id = item.id + '_0_' + size;
-    const cart = store().cartReducer.cart_itens.filter((cart_item) => cart_item.id === id);
+    const cart = JSON.parse(localStorage.getItem('@fashionista/cart_itens'));
+    let cart_item = null;
 
-    if (cart[0]){
-        dispatch(changeQty(cart[0].id,cart[0].qty+1));
+    if (cart)
+        cart_item = cart.filter((cart_item) => cart_item.id === id)[0];
+
+    if (cart_item) {
+        dispatch(changeQty(cart_item.id, cart_item.qty + 1));
         return
     }
 
@@ -61,24 +62,21 @@ export const addItemToCard = (item, size) => (dispatch, store) => {
         size,
         qty: 1
     };
-
-    dispatch({
-        type: ADD_ITEM_TO_CARD,
-        payload: item_to_cart
-    })
-
+    console.log('asa',item_to_cart)
+    localStorage.setItem('@fashionista/cart_itens', JSON.stringify(cart?[...cart,item_to_cart]:[item_to_cart]));
     dispatch(reloadTotalPrice());
 }
 
-export const reloadTotalPrice = () => (dispatch,store) => {
-    const cart = store().cartReducer.cart_itens;
+export const reloadTotalPrice = () => (dispatch) => {
+    const cart = JSON.parse(localStorage.getItem('@fashionista/cart_itens'));
     let total_price = 0;
     let total_itens_qty = 0;
 
-    for(let itens of cart){
-        total_price += getNumbers(itens.actual_price) * itens.qty;
-        total_itens_qty += itens.qty;
-    }
+    if (cart)
+        for (let itens of cart) {
+            total_price += getNumbers(itens.actual_price) * itens.qty;
+            total_itens_qty += itens.qty;
+        }
 
     dispatch({
         type: SET_TOTAL_PRICE,
