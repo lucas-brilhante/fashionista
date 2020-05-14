@@ -47,6 +47,7 @@ const HeaderBackground = styled.header`
     position: fixed;
     z-index: 20;
     height: 64px;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
 `;
 
 const HeaderContent = styled.div`

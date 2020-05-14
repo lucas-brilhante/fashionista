@@ -129,7 +129,7 @@ const ItemInfoGroup = styled.div`
 
 const ItemImage = styled.img.attrs({ alt: 'Item Image' })`
     width: 100px;
-    height: auto;
+    height: 126px;
     margin-right: 10px;
 `;
 

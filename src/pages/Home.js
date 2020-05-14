@@ -62,12 +62,7 @@ const NumberOfItens = styled.span`
 const ItensGrid = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-
-  @media only screen and (max-width: 600px) {
-    justify-content: center;
-  }
-
+  justify-content: center;
 `;
 
 const Item = styled.div`
@@ -84,6 +79,7 @@ const Item = styled.div`
 
   &:hover {
     border: 1px solid rgba(0, 0, 0, 1);
+    margin: 9px; 
   }
 `;
 

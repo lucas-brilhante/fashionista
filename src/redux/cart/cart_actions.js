@@ -62,7 +62,6 @@ export const addItemToCard = (item, size) => (dispatch) => {
         size,
         qty: 1
     };
-    console.log('asa',item_to_cart)
     localStorage.setItem('@fashionista/cart_itens', JSON.stringify(cart?[...cart,item_to_cart]:[item_to_cart]));
     dispatch(reloadTotalPrice());
 }
