@@ -47,7 +47,7 @@ const DummyContainer = styled.div`
 
 const MainContent = styled.main`
     display: flex;
-    
+    position: relative;
 `;
 
 const mapStateToProps = state => ({

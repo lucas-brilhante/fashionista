@@ -1,38 +1,36 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 
 const Dialog = ({ component, active, closeDialog }) => {
     const Component = component;
 
+    const handleKeyPress = useCallback((e) => {
+        if (e.key === 'Escape')
+            closeDialog();
+    },[closeDialog])
+
     useEffect(() => {
-        const dialog = document.getElementById('dialog');
-        if (dialog)
-            dialog.focus();
-    }, [])
+        if (active)
+            document.addEventListener("keydown", handleKeyPress, false);
+        else
+            document.removeEventListener("keydown", handleKeyPress, false);
+    }, [handleKeyPress, active]);
 
     if (!active)
         return <div />
-
-    const handleKeyPress = (e) => {
-        console.log('key', e.key);
-        if (e.key === 'Escape')
-            closeDialog();
-    }
 
     const handleClick = () => {
         closeDialog();
     }
 
     return (
-        <Fragment>
-            <DialogBackground onKeyDown={handleKeyPress} tabIndex={-1} onClick={handleClick} />
-            <DialogContainer >
-                <DialogContent>
-                <DummyContainer/>
-                    <Component closeDialog={closeDialog}/>
-                </DialogContent>
-            </DialogContainer>
-        </Fragment>
+        <DialogContainer>
+            <DialogBackground onClick={handleClick} />
+            <DialogContent>
+                <DummyContainer />
+                <Component closeDialog={closeDialog} />
+            </DialogContent>
+        </DialogContainer>
     )
 
 }
@@ -59,7 +57,6 @@ const DummyContainer = styled.div`
 
 const DialogBackground = styled.div`
     display: flex;
-    justify-content: flex-end;
     background: rgba(0, 0, 0, 0.6);
     color: red;
     position: fixed;
