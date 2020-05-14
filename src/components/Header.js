@@ -5,21 +5,21 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setSearch, showCart } from 'redux/index';
 
-const Header = ({ cart_itens, itens_total_qty, setSearch, showCart }) => {
+const Header = ({ itens_total_qty, setSearch, showCart }) => {
     const history = useHistory();
 
     const onClickLogo = () => {
         history.push("/");
     }
 
-    const handleSearchClick = () => {
+    const handleSearchClick = async () => {
+        await showCart(false);
         setSearch(true);
-        showCart(false);
     }
 
-    const handleCartClick = () => {
+    const handleCartClick = async () => {
+        await setSearch(false);
         showCart(true);
-        setSearch(false);
     }
 
     return (
@@ -46,8 +46,13 @@ const HeaderBackground = styled.header`
     width: 100%;
     position: fixed;
     z-index: 20;
-    height: 64px;
+    height: 50px;
     border-bottom: 1px solid rgba(0,0,0,0.3);
+    overflow: hidden;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 `;
 
 const HeaderContent = styled.div`
@@ -59,9 +64,7 @@ const HeaderContent = styled.div`
     align-items: center;
 `;
 
-const Logo = styled.div.attrs({
-    IndexOf: -1
-})`
+const Logo = styled.div`
     cursor: pointer;
     font-size: 20px;
     font-weight: bolder;
@@ -116,7 +119,6 @@ const BagCount = styled.div`
 `;
 
 const mapStateToProps = state => ({
-    cart_itens: state.cartReducer.cart_itens,
     itens_total_qty: state.cartReducer.itens_total_qty
 });
 

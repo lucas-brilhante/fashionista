@@ -65,6 +65,10 @@ const CartContent = styled.div`
     flex-direction: column;
     width: 320px;
     box-shadow: 0 0 15px 0 rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    overflow: hidden;
 `;
 
 const CartHeader = styled.div`
@@ -73,7 +77,7 @@ const CartHeader = styled.div`
     background: #fff;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(0,0,0,0.3);
 `;
 
 const ArrowLeftIcon = styled(FiArrowLeft)`
@@ -162,6 +166,7 @@ const ItemButton = styled.button`
     border-width: 1px;
     outline: none;
     width: 25px;
+    cursor: pointer;
 `;
 
 const ItemQty = styled.span`

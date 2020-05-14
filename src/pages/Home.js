@@ -15,7 +15,7 @@ const Home = ({ itens }) => {
     <HomeContent>
       <NumberOfItens>{itens.length} Itens</NumberOfItens>
       <ItensGrid>
-        {itens.map((item,index) => {
+        {itens.map((item) => {
           const actual_price = getNumbers(item.actual_price);
           const regular_price = getNumbers(item.regular_price);
           return (

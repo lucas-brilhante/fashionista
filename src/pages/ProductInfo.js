@@ -72,7 +72,7 @@ const ProductContainer = styled.div`
 
 const ProductImg = styled.img.attrs({ alt: 'Product Image' })`
     width: calc(250px + 15vw);
-    margin: 15px 20px 0 20px;
+    margin: 15px 10px 0px 10px;
     box-shadow: 0px 0px 15px 0px rgba(0,0,0,1);
     border-radius: 12px;
 `;

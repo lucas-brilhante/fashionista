@@ -57,6 +57,10 @@ const SerchContent = styled.div`
     flex-direction: column;
     width: 320px;
     box-shadow: 0 0 15px 0 rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    overflow: hidden;
 `;
 
 const SearchHeader = styled.div`
@@ -65,7 +69,7 @@ const SearchHeader = styled.div`
     background: #fff;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(0,0,0,0.5);
 `;
 
 const ArrowLeftIcon = styled(FiArrowLeft)`

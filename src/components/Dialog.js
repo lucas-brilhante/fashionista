@@ -1,20 +1,30 @@
 import React, { useEffect, useCallback } from 'react';
 import styled from 'styled-components';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 const Dialog = ({ component, active, closeDialog }) => {
     const Component = component;
+    const main = document.querySelector('#Main');
 
     const handleKeyPress = useCallback((e) => {
         if (e.key === 'Escape')
             closeDialog();
-    },[closeDialog])
+    }, [closeDialog])
 
     useEffect(() => {
         if (active)
             document.addEventListener("keydown", handleKeyPress, false);
         else
             document.removeEventListener("keydown", handleKeyPress, false);
+
     }, [handleKeyPress, active]);
+
+    useEffect(() => {
+        if (active)
+            disableBodyScroll(main);
+        else
+            enableBodyScroll(main);
+    }, [active, main]);
 
     if (!active)
         return <div />
@@ -52,7 +62,7 @@ const DialogContainer = styled.div`
 
 const DummyContainer = styled.div`
     display: flex;
-    height: 64px;
+    height: 50px;
 `;
 
 const DialogBackground = styled.div`
@@ -68,11 +78,11 @@ const DialogBackground = styled.div`
 `;
 
 const DialogContent = styled.div`
+    position: static;
     display: flex;
     flex-direction: column;
     z-index: 10;
     position: absolute;
-    background: blue;
 `;
 
 export default Dialog;

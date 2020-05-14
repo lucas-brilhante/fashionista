@@ -7,7 +7,7 @@ import { setSearch, fetchItens, showCart, reloadTotalPrice } from 'redux/index';
 import styled from 'styled-components';
 import { SearchDialog, CartDialog } from 'components';
 
-const Main = ({ search_bar,show_cart, itens, setSearch, fetchItens, showCart, reloadTotalPrice }) => {
+const Main = ({ search_bar, show_cart, itens, setSearch, fetchItens, showCart, reloadTotalPrice }) => {
 
     useEffect(() => {
         fetchItens();
@@ -26,7 +26,7 @@ const Main = ({ search_bar,show_cart, itens, setSearch, fetchItens, showCart, re
         return (
             <Fragment>
                 <DummyContainer height={64} />
-                <MainContent>
+                <MainContent id="Main">
                     <Dialog active={search_bar} component={SearchDialog} closeDialog={closeSearchDialog} />
                     <Dialog active={show_cart} component={CartDialog} closeDialog={closeCartDialog} />
                     <Switch>
