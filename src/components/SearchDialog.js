@@ -34,17 +34,19 @@ const SearchDialog = ({ itens_searched, SearchItem, closeDialog }) => {
                 <ItensNumberText>{itens_searched.length} itens</ItensNumberText>
             </ItensNumberContainer>
             <ItemList>
-                {itens_searched.map((item) =>
-                    <Item key={item.id} onClick={handleItemClick(item.id)}>
-                        <ItemImage src={item.image} />
-                        <ItemInfoGroup width={100}>
-                            <ItemName>{item.name}</ItemName>
-                        </ItemInfoGroup>
-                        <ItemValueGroup>
-                            <ItemPrice>{(item.actual_price < item.regular_price) ? item.actual_price : item.regular_price}</ItemPrice>
-                            <ItemParcelPrice>{item.installments}</ItemParcelPrice>
-                        </ItemValueGroup>
-                    </Item>
+                {itens_searched.map((item) => 
+                    <div key={item.id} onClick={handleItemClick(item.id)}>
+                        <Item>
+                            <ItemImage src={item.image} />
+                            <ItemInfoGroup width={90}>
+                                <ItemName>{item.name}</ItemName>
+                            </ItemInfoGroup>
+                            <ItemValueGroup>
+                                <ItemPrice>{(item.actual_price < item.regular_price) ? item.actual_price : item.regular_price}</ItemPrice>
+                                <ItemParcelPrice>{item.installments}</ItemParcelPrice>
+                            </ItemValueGroup>
+                        </Item>
+                    </div>
                 )}
             </ItemList>
         </SerchContent>
@@ -129,12 +131,12 @@ const ItemInfoGroup = styled.div`
     flex-direction: row;
     margin-right: auto;
     width: ${({width}) => width?width+'px':'auto'};
+    margin-left: 10px;
 `;
 
 const ItemImage = styled.img.attrs({ alt: 'Item Image' })`
     width: 100px;
     height: 126px;
-    margin-right: 10px;
 `;
 
 const ItemName = styled.span`
@@ -146,6 +148,7 @@ const ItemName = styled.span`
 const ItemValueGroup = styled.div`
     display: flex;
     flex-direction: column;
+    padding-left: 10px;
 `;
 
 const ItemPrice = styled.span`

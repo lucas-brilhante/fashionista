@@ -8,50 +8,51 @@ const CartDialog = ({ cart_total_price, changeQty, removeItem, closeDialog }) =>
     const cart_itens = JSON.parse(localStorage.getItem('@fashionista/cart_itens'));
 
     const addQty = (item_id, item_qty) => () => {
-        changeQty(item_id, item_qty+1);
+        changeQty(item_id, item_qty + 1);
     }
 
     const removeQty = (item_id, item_qty) => () => {
-        if(item_qty > 1)
-            changeQty(item_id, item_qty-1);
+        if (item_qty > 1)
+            changeQty(item_id, item_qty - 1);
     }
 
     const removeCartItem = (item_id) => () => {
         removeItem(item_id)
     }
 
-    const closePopup = () =>{
+    const closePopup = () => {
         closeDialog()
     }
 
     return (
         <CartContent>
             <CartHeader>
-                <ArrowLeftIcon onClick={closePopup}/>
-                <SearchText>Sacola({cart_itens?cart_itens.length:'0'})</SearchText>
+                <ArrowLeftIcon onClick={closePopup} />
+                <SearchText>Sacola({cart_itens ? cart_itens.length : '0'})</SearchText>
             </CartHeader>
             <ItemList>
-                {cart_itens && cart_itens.map((item) =>{
-                    return <Item key={item.id}>
-                        <ItemInfoGroup>
-                            <ItemImage src={item.image} />
-                            <RemoveItem onClick={(removeCartItem(item.id))}>Remover Item</RemoveItem>
-                        </ItemInfoGroup>
-                        <ItemInfoGroup width={90}>
-                            <ItemName>{item.name}</ItemName>
-                            <ItemSize>Tam: {item.size}</ItemSize>
-                            <ItemQtyGoup>
-                                <ItemButton onClick={removeQty(item.id,item.qty)}>-</ItemButton>
-                                <ItemQty>{item.qty}</ItemQty>
-                                <ItemButton onClick={addQty(item.id,item.qty)}>+</ItemButton>
-                            </ItemQtyGoup>
-                        </ItemInfoGroup>
-                        <ItemValueGroup>
-                            <ItemPrice>{(item.actual_price < item.regular_price) ? item.actual_price : item.regular_price}</ItemPrice>
-                            <ItemParcelPrice>{item.installments}</ItemParcelPrice>
-                        </ItemValueGroup>
-                    </Item>
-                }
+                {cart_itens && cart_itens.map((item) =>
+                    <div key={item.id}>
+                        <Item>
+                            <ItemInfoGroup>
+                                <ItemImage src={item.image} />
+                                <RemoveItem onClick={(removeCartItem(item.id))}>Remover Item</RemoveItem>
+                            </ItemInfoGroup>
+                            <ItemInfoGroup width={90}>
+                                <ItemName>{item.name}</ItemName>
+                                <ItemSize>Tam: {item.size}</ItemSize>
+                                <ItemQtyGoup>
+                                    <ItemButton onClick={removeQty(item.id, item.qty)}>-</ItemButton>
+                                    <ItemQty>{item.qty}</ItemQty>
+                                    <ItemButton onClick={addQty(item.id, item.qty)}>+</ItemButton>
+                                </ItemQtyGoup>
+                            </ItemInfoGroup>
+                            <ItemValueGroup>
+                                <ItemPrice>{(item.actual_price < item.regular_price) ? item.actual_price : item.regular_price}</ItemPrice>
+                                <ItemParcelPrice>{item.installments}</ItemParcelPrice>
+                            </ItemValueGroup>
+                        </Item>
+                    </div>
                 )}
             </ItemList>
             <CartTotalValue>Subtotal - {cart_total_price}</CartTotalValue>
@@ -69,6 +70,7 @@ const CartContent = styled.div`
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     overflow: hidden;
+    margin-bottom: 30px;
 `;
 
 const CartHeader = styled.div`
@@ -113,10 +115,10 @@ const Item = styled.div`
 
 const ItemInfoGroup = styled.div`
     display: flex;
-    width: ${({width}) => width?width+'px':'auto'};
+    width: ${({ width }) => width ? width + 'px' : 'auto'};
     flex-direction: column;
     margin-right: auto;
-    margin-right: 10px;
+    margin-left: ${({ marginLeft }) => marginLeft ? marginLeft + 'px' : '0'};;
 `;
 
 const ItemImage = styled.img.attrs({ alt: 'Item Image' })`
@@ -158,6 +160,7 @@ const ItemName = styled.span`
 `;
 
 const ItemButton = styled.button`
+    display: flex;
     background: #FFFAFA;
     border-color: #5c5c5c;
     color: black;
@@ -166,6 +169,8 @@ const ItemButton = styled.button`
     border-width: 1px;
     outline: none;
     width: 25px;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
 `;
 
@@ -200,7 +205,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    changeQty: (item_id, qty) => dispatch(changeQty(item_id,qty)),
+    changeQty: (item_id, qty) => dispatch(changeQty(item_id, qty)),
     removeItem: (item_id) => dispatch(removeItem(item_id))
 });
 

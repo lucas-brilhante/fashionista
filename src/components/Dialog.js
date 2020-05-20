@@ -1,30 +1,30 @@
-import React, { useEffect, useCallback, memo } from 'react';
+import React, { useEffect, memo } from 'react';
 import styled from 'styled-components';
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 const Dialog = ({ component, active, closeDialog }) => {
     const Component = component;
-    const main = document.querySelector('#Main');
-
-    const handleKeyPress = useCallback((e) => {
-        if (e.key === 'Escape')
-            closeDialog();
-    }, [closeDialog])
 
     useEffect(() => {
+        const handleKeyPress = (e) => {
+            if (e.key === 'Escape')
+                closeDialog();
+        }
+
         if (active)
             document.addEventListener("keydown", handleKeyPress, false);
-        else
-            document.removeEventListener("keydown", handleKeyPress, false);
+        
+        return () => document.removeEventListener("keydown", handleKeyPress, false);
 
-    }, [handleKeyPress, active]);
+    }, [active, closeDialog]);
 
     useEffect(() => {
-        if (active)
-            disableBodyScroll(main);
-        else
-            enableBodyScroll(main);
-    }, [active, main]);
+        const overflow_type = document.body.style.overflow;
+        if (active){
+            document.body.style.overflow = "hidden"
+        }
+        
+        return () => document.body.style.overflow = overflow_type;
+    }, [active]);
 
     if (!active)
         return <div />
@@ -38,7 +38,7 @@ const Dialog = ({ component, active, closeDialog }) => {
             <DialogBackground onClick={handleClick} />
             <DialogContent>
                 <DummyContainer />
-                <Component closeDialog={closeDialog} />
+                <Component closeDialog={closeDialog}/>
             </DialogContent>
         </DialogContainer>
     )
