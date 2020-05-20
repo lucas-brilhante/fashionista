@@ -4,3 +4,4 @@ export { default as Dialog } from './Dialog';
 export { default as SearchDialog } from './SearchDialog';
 export { default as CartDialog } from './CartDialog';
 export { default as Loading } from './Loading';
+export { default as Routes } from './Routes';
