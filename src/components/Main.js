@@ -1,11 +1,14 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Home, ProductInfo } from 'pages';
 import { Dialog } from 'components';
 import { connect } from 'react-redux';
 import { setSearch, fetchItens, showCart, reloadTotalPrice } from 'redux/index';
 import styled from 'styled-components';
 import { SearchDialog, CartDialog } from 'components';
+import { Loading } from 'components';
+
+const Home = lazy(() => import('pages/Home'));
+const ProductInfo = lazy(() => import('pages/ProductInfo'));
 
 const Main = ({ search_bar, show_cart, itens, setSearch, fetchItens, showCart, reloadTotalPrice }) => {
 
@@ -22,9 +25,9 @@ const Main = ({ search_bar, show_cart, itens, setSearch, fetchItens, showCart, r
         showCart(false);
     }
 
-    if (itens)
+    if (itens.length > 0)
         return (
-            <Fragment>
+            <Suspense fallback={<Loading/>}>
                 <DummyContainer height={64} />
                 <MainContent id="Main">
                     <Dialog active={search_bar} component={SearchDialog} closeDialog={closeSearchDialog} />
@@ -34,9 +37,10 @@ const Main = ({ search_bar, show_cart, itens, setSearch, fetchItens, showCart, r
                         <Route path="/product/:id" component={ProductInfo} />
                     </Switch>
                 </MainContent>
-            </Fragment>)
+            </Suspense>
+        )
     else
-        return null;
+        return <Loading />
 
 }
 
