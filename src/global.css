@@ -11,7 +11,7 @@ body {
   overflow-y: overlay;
 }
 
-input, select, textarea {
+input, select, textarea, button {
   font-family: 'Roboto',sans-serif;
 }
 

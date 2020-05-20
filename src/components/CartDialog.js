@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FiArrowLeft } from 'react-icons/fi';
 import { connect } from 'react-redux'
 import { changeQty, removeItem } from 'redux/index';
+import { getNumbers } from 'utils';
 
 const CartDialog = ({ cart_total_price, changeQty, removeItem, closeDialog }) => {
     const cart_itens = JSON.parse(localStorage.getItem('@fashionista/cart_itens'));
@@ -31,8 +32,10 @@ const CartDialog = ({ cart_total_price, changeQty, removeItem, closeDialog }) =>
                 <SearchText>Sacola({cart_itens ? cart_itens.length : '0'})</SearchText>
             </CartHeader>
             <ItemList>
-                {cart_itens && cart_itens.map((item) =>
-                    <div key={item.id}>
+                {cart_itens && cart_itens.map((item) =>{
+                    const actual_price = getNumbers(item.actual_price);
+                    const regular_price = getNumbers(item.regular_price);
+                    return <div key={item.id}>
                         <Item>
                             <ItemInfoGroup>
                                 <ItemImage src={item.image} />
@@ -48,11 +51,12 @@ const CartDialog = ({ cart_total_price, changeQty, removeItem, closeDialog }) =>
                                 </ItemQtyGoup>
                             </ItemInfoGroup>
                             <ItemValueGroup>
-                                <ItemPrice>{(item.actual_price < item.regular_price) ? item.actual_price : item.regular_price}</ItemPrice>
+                                <ItemPrice>{(actual_price < regular_price) ? item.actual_price : item.regular_price}</ItemPrice>
                                 <ItemParcelPrice>{item.installments}</ItemParcelPrice>
                             </ItemValueGroup>
                         </Item>
                     </div>
+                }
                 )}
             </ItemList>
             <CartTotalValue>Subtotal - {cart_total_price}</CartTotalValue>

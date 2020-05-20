@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { FiArrowLeft } from 'react-icons/fi';
 import { connect } from 'react-redux'
 import { SearchItem } from 'redux/index';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { getNumbers } from 'utils';
 
 const SearchDialog = ({ itens_searched, SearchItem, closeDialog }) => {
     const history = useHistory();
@@ -13,18 +14,18 @@ const SearchDialog = ({ itens_searched, SearchItem, closeDialog }) => {
         SearchItem(item_name);
     }
 
-    const handleItemClick = (item_id) => () =>{
+    const handleItemClick = (item_id) => () => {
         history.push(`/product/${item_id}`)
     }
 
-    const closePopup = () =>{
+    const closePopup = () => {
         closeDialog()
     }
 
     return (
         <SerchContent>
             <SearchHeader>
-                <ArrowLeftIcon onClick={closePopup}/>
+                <ArrowLeftIcon onClick={closePopup} />
                 <SearchText>Buscar Produtos</SearchText>
             </SearchHeader>
             <SearchInputContainer>
@@ -34,19 +35,22 @@ const SearchDialog = ({ itens_searched, SearchItem, closeDialog }) => {
                 <ItensNumberText>{itens_searched.length} itens</ItensNumberText>
             </ItensNumberContainer>
             <ItemList>
-                {itens_searched.map((item) => 
-                    <div key={item.id} onClick={handleItemClick(item.id)}>
+                {itens_searched.map((item) => {
+                    const actual_price = getNumbers(item.actual_price);
+                    const regular_price = getNumbers(item.regular_price);
+                    return <div key={item.id} onClick={handleItemClick(item.id)}>
                         <Item>
                             <ItemImage src={item.image} />
                             <ItemInfoGroup width={90}>
                                 <ItemName>{item.name}</ItemName>
                             </ItemInfoGroup>
                             <ItemValueGroup>
-                                <ItemPrice>{(item.actual_price < item.regular_price) ? item.actual_price : item.regular_price}</ItemPrice>
+                                <ItemPrice>{(actual_price < regular_price) ? item.actual_price : item.regular_price}</ItemPrice>
                                 <ItemParcelPrice>{item.installments}</ItemParcelPrice>
                             </ItemValueGroup>
                         </Item>
                     </div>
+                }
                 )}
             </ItemList>
         </SerchContent>
@@ -130,7 +134,7 @@ const ItemInfoGroup = styled.div`
     display: flex;
     flex-direction: row;
     margin-right: auto;
-    width: ${({width}) => width?width+'px':'auto'};
+    width: ${({ width }) => width ? width + 'px' : 'auto'};
     margin-left: 10px;
 `;
 
