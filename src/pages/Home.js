@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getPercentageDiscount, getNumbers } from 'utils';
 import { useHistory } from 'react-router-dom';
 
-const Home = ({ itens }) => {
+const Home = ({ itens=[] }) => {
   const history = useHistory();
 
   const handleClick = (id) => () => {

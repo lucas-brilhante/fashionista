@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, memo } from 'react';
 import styled from 'styled-components';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
@@ -85,4 +85,4 @@ const DialogContent = styled.div`
     position: absolute;
 `;
 
-export default Dialog;
+export default memo(Dialog);

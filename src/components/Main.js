@@ -1,11 +1,10 @@
-import React, { Fragment, useEffect } from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { Home, ProductInfo } from 'pages';
+import React, { useEffect, Suspense, useCallback } from 'react';
 import { Dialog } from 'components';
 import { connect } from 'react-redux';
 import { setSearch, fetchItens, showCart, reloadTotalPrice } from 'redux/index';
 import styled from 'styled-components';
 import { SearchDialog, CartDialog } from 'components';
+import { Loading, Routes } from 'components';
 
 const Main = ({ search_bar, show_cart, itens, setSearch, fetchItens, showCart, reloadTotalPrice }) => {
 
@@ -14,29 +13,27 @@ const Main = ({ search_bar, show_cart, itens, setSearch, fetchItens, showCart, r
         reloadTotalPrice();
     }, [fetchItens, reloadTotalPrice])
 
-    const closeSearchDialog = () => {
+    const closeSearchDialog = useCallback(() => {
         setSearch(false);
-    }
+    }, [setSearch])
 
-    const closeCartDialog = () => {
+    const closeCartDialog = useCallback(() => {
         showCart(false);
-    }
+    }, [showCart])
 
-    if (itens)
+    if (itens.length > 0)
         return (
-            <Fragment>
+            <Suspense fallback={<Loading />}>
                 <DummyContainer height={64} />
                 <MainContent id="Main">
                     <Dialog active={search_bar} component={SearchDialog} closeDialog={closeSearchDialog} />
                     <Dialog active={show_cart} component={CartDialog} closeDialog={closeCartDialog} />
-                    <Switch>
-                        <Route path="/" exact component={Home} />
-                        <Route path="/product/:id" component={ProductInfo} />
-                    </Switch>
+                    <Routes />
                 </MainContent>
-            </Fragment>)
+            </Suspense>
+        )
     else
-        return null;
+        return <Loading />
 
 }
 
