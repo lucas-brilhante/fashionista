@@ -7,7 +7,6 @@ import { SearchDialog, CartDialog } from 'components';
 import { Loading, Routes } from 'components';
 
 const Main = ({ search_bar, show_cart, itens, setSearch, fetchItens, showCart, reloadTotalPrice }) => {
-
     useEffect(() => {
         fetchItens();
         reloadTotalPrice();
@@ -25,7 +24,7 @@ const Main = ({ search_bar, show_cart, itens, setSearch, fetchItens, showCart, r
         return (
             <Suspense fallback={<Loading />}>
                 <DummyContainer height={64} />
-                <MainContent id="Main">
+                <MainContent>
                     <Dialog active={search_bar} component={SearchDialog} closeDialog={closeSearchDialog} />
                     <Dialog active={show_cart} component={CartDialog} closeDialog={closeCartDialog} />
                     <Routes />

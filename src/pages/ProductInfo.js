@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { showCart, findItem, addItemToCard } from 'redux/index';
 import { connect } from 'react-redux';
+import { getNumbers } from 'utils';
 
 const ProductInfo = ({ showCart, findItem, addItemToCard }) => {
     const item = findItem(useParams().id);
@@ -17,42 +18,56 @@ const ProductInfo = ({ showCart, findItem, addItemToCard }) => {
         showCart(true);
     }
 
-    useEffect(()=>{
-        if(item){
-            for(let size of item.sizes){
-                if(size.available){
+    useEffect(() => {
+        if (item) {
+            for (let size of item.sizes) {
+                if (size.available) {
                     setSizeSelected(size.size);
                     break;
                 }
             }
         }
-    },[item])
+    }, [item])
 
-    if (item){
+    if (item) {
+        const { name, image, installments, sizes } = item;
+        const actual_price = getNumbers(item.actual_price);
+        const regular_price = getNumbers(item.regular_price);
         return (
             <ProductContainer>
-                <ProductImg src={item.image} />
+                <ProductImg src={image} />
                 <ProductInfoContainer>
-                    <ProductName>{item.name}</ProductName>
+                    <ProductName>{name}</ProductName>
                     <ProductValueContainer>
-                        <ProductValue>{item.actual_price}</ProductValue>
-                        <ProductParcel> em até {item.installments}</ProductParcel>
+                        {actual_price < regular_price &&
+                            <PriceContainer>
+                                <ItemPrice2>{item.regular_price}</ItemPrice2>
+                                <ItemPrice>{item.actual_price}</ItemPrice>
+                            </PriceContainer>
+                        }
+
+                        {!(actual_price < regular_price) &&
+                            <PriceContainer>
+                                <ItemPrice>{item.regular_price}</ItemPrice>
+                            </PriceContainer>
+                        }
+                        <ProductParcel> em até {installments}</ProductParcel>
                     </ProductValueContainer>
                     <ProductSizeText>Escolha o tamanho</ProductSizeText>
                     <ProductSizesContainer>
-                    {item.sizes.map((size) => {
-                        if (size.available)
-                            return (
-                                <ProductSize key={size.sku}
-                                    actived={size_selected === size.size}
-                                    onClick={handleClick(size.size)}>
-                                    {size.size}
-                                </ProductSize>
-                            )
-                        return <Fragment key={size.sku} />
-                    })}
-                </ProductSizesContainer>
-                    <AddProductToCard onClick={addItem(item,size_selected)}>Adicionar à Sacola</AddProductToCard>
+                        {sizes.map((size) => {
+                            if (size.available)
+                                return (
+                                    <ProductSize key={size.sku}
+                                        actived={size_selected === size.size}
+                                        onClick={handleClick(size.size)}>
+                                        {size.size}
+                                    </ProductSize>
+                                )
+                            return <Fragment key={size.sku} />
+                        })}
+                    </ProductSizesContainer>
+                    <AddProductToCard onClick={addItem(item, size_selected)}>Adicionar à Sacola</AddProductToCard>
                 </ProductInfoContainer>
             </ProductContainer>
         )
@@ -95,11 +110,24 @@ const ProductValueContainer = styled.div`
     flex-direction: row;
 `;
 
-const ProductValue = styled.span`
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    margin-right: 10px;
+const PriceContainer = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+`;
+
+const ItemPrice = styled.span`
+  font-size: 15px;
+  font-weight: 600;
+  padding-right: 10px;
+
+`;
+
+const ItemPrice2 = styled.span`
+  font-size: 15px;
+  font-weight: 400;
+  color: #555;
+  text-decoration: line-through;
+  padding-right: 10px;
 `;
 
 const ProductParcel = styled.span`
