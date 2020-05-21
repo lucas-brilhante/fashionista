@@ -1,11 +1,12 @@
-import axios from 'axios';
+import { api } from 'services';
 import { FETCH_ITENS } from './consts';
 import { getProductId } from 'utils';
 
 export const fetchItens = () => async (dispatch) => {
     const itens_array = [];
-    const itens = await axios.get('https://5e9935925eabe7001681c856.mockapi.io/api/v1/catalog');
-    for (let item of itens.data) {
+    const itens = await api();
+
+    for (let item of itens) {
         itens_array.push({
             id: getProductId(item),
             ...item

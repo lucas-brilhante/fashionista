@@ -1,12 +1,12 @@
-import React, { useEffect, Suspense, useCallback } from 'react';
+import React, { useEffect, Suspense, useCallback, Fragment } from 'react';
 import { Dialog } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSearch, fetchItens, showCart, reloadTotalPrice } from 'redux/index';
 import styled from 'styled-components';
 import { SearchDialog, CartDialog } from 'components';
-import { Loading, Routes } from 'components';
+import { Loading, Header } from 'components';
 
-const Main = () => {
+const Main = ({ children }) => {
     const selector = useSelector(state => state);
     const dispatch = useDispatch();
 
@@ -29,14 +29,17 @@ const Main = () => {
 
     if (itens.length > 0)
         return (
-            <Suspense fallback={<Loading />}>
-                <DummyContainer height={64} />
-                <MainContent>
-                    <Dialog active={search_bar} component={SearchDialog} closeDialog={closeSearchDialog} />
-                    <Dialog active={show_cart} component={CartDialog} closeDialog={closeCartDialog} />
-                    <Routes />
-                </MainContent>
-            </Suspense>
+            <Fragment>
+                <Header />
+                <Suspense fallback={<Loading />}>
+                    <DummyContainer height={64} />
+                    <MainContent>
+                        <Dialog active={search_bar} component={SearchDialog} closeDialog={closeSearchDialog} />
+                        <Dialog active={show_cart} component={CartDialog} closeDialog={closeCartDialog} />
+                        {children}
+                    </MainContent>
+                </Suspense>
+            </Fragment>
         )
     else
         return <Loading />

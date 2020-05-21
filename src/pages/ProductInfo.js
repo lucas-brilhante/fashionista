@@ -1,11 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { showCart, findItem, addItemToCard } from 'redux/index';
 import { useDispatch } from 'react-redux';
 import { getNumbers } from 'utils';
 
 const ProductInfo = () => {
+    const history = useHistory();
     const dispatch = useDispatch();
     const item = dispatch(findItem(useParams().id));
     const [size_selected, setSizeSelected] = useState('');
@@ -28,7 +29,9 @@ const ProductInfo = () => {
                 }
             }
         }
-    }, [item])
+        else
+            history.push('/not-found');
+    }, [item,history])
 
     if (item) {
         const { name, image, installments, sizes } = item;
