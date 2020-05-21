@@ -2,11 +2,12 @@ import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { showCart, findItem, addItemToCard } from 'redux/index';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getNumbers } from 'utils';
 
-const ProductInfo = ({ showCart, findItem, addItemToCard }) => {
-    const item = findItem(useParams().id);
+const ProductInfo = () => {
+    const dispatch = useDispatch();
+    const item = dispatch(findItem(useParams().id));
     const [size_selected, setSizeSelected] = useState('');
 
     const handleClick = (size) => () => {
@@ -14,8 +15,8 @@ const ProductInfo = ({ showCart, findItem, addItemToCard }) => {
     }
 
     const addItem = (item, size) => () => {
-        addItemToCard(item, size);
-        showCart(true);
+        dispatch(addItemToCard(item, size));
+        dispatch(showCart(true));
     }
 
     useEffect(() => {
@@ -190,11 +191,4 @@ const AddProductToCard = styled.button`
 `;
 
 
-
-const mapDispatchToProps = dispatch => ({
-    showCart: (value) => dispatch(showCart(value)),
-    findItem: (item_id) => dispatch(findItem(item_id)),
-    addItemToCard: (item, size) => dispatch(addItemToCard(item, size))
-})
-
-export default connect(null, mapDispatchToProps)(ProductInfo);
+export default ProductInfo;

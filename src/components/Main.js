@@ -1,24 +1,31 @@
 import React, { useEffect, Suspense, useCallback } from 'react';
 import { Dialog } from 'components';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setSearch, fetchItens, showCart, reloadTotalPrice } from 'redux/index';
 import styled from 'styled-components';
 import { SearchDialog, CartDialog } from 'components';
 import { Loading, Routes } from 'components';
 
-const Main = ({ search_bar, show_cart, itens, setSearch, fetchItens, showCart, reloadTotalPrice }) => {
+const Main = () => {
+    const selector = useSelector(state => state);
+    const dispatch = useDispatch();
+
+    const { search_bar } = selector.searchReducer;
+    const { show_cart } = selector.cartReducer;
+    const itens = selector.itemReducer
+
     useEffect(() => {
-        fetchItens();
-        reloadTotalPrice();
-    }, [fetchItens, reloadTotalPrice])
+        dispatch(fetchItens());
+        dispatch(reloadTotalPrice());
+    }, [dispatch])
 
     const closeSearchDialog = useCallback(() => {
-        setSearch(false);
-    }, [setSearch])
+        dispatch(setSearch(false));
+    }, [dispatch])
 
     const closeCartDialog = useCallback(() => {
-        showCart(false);
-    }, [showCart])
+        dispatch(showCart(false));
+    }, [dispatch])
 
     if (itens.length > 0)
         return (
@@ -46,17 +53,4 @@ const MainContent = styled.main`
     position: relative;
 `;
 
-const mapStateToProps = state => ({
-    search_bar: state.searchReducer.search_bar,
-    show_cart: state.cartReducer.show_cart,
-    itens: state.itemReducer
-});
-
-const mapDispatchToProps = dispatch => ({
-    setSearch: (value) => dispatch(setSearch(value)),
-    fetchItens: () => dispatch(fetchItens()),
-    showCart: (value) => dispatch(showCart(value)),
-    reloadTotalPrice: () => dispatch(reloadTotalPrice())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default Main;
