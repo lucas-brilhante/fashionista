@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getPercentageDiscount, getNumbers } from 'utils';
 import { useHistory } from 'react-router-dom';
 
-const Home = ({ itens=[] }) => {
+const Home = () => {
   const history = useHistory();
+  const itens = useSelector(state => state.itemReducer);
 
   const handleClick = (id) => () => {
     history.push(`/product/${id}`)
@@ -131,9 +132,5 @@ const ItemPrice2 = styled.span`
   text-decoration: line-through;
 `;
 
-const mapStateToProps = state => ({
-  itens: state.itemReducer
-});
 
-
-export default connect(mapStateToProps, null)(Home);
+export default Home;

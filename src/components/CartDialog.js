@@ -1,24 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FiArrowLeft } from 'react-icons/fi';
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { changeQty, removeItem } from 'redux/index';
 import { getNumbers } from 'utils';
 
-const CartDialog = ({ cart_total_price, changeQty, removeItem, closeDialog }) => {
+const CartDialog = ({ closeDialog }) => {
     const cart_itens = JSON.parse(localStorage.getItem('@fashionista/cart_itens'));
+    const dispatch = useDispatch();
+    const { total_price } = useSelector((state) => state.cartReducer);
+
 
     const addQty = (item_id, item_qty) => () => {
-        changeQty(item_id, item_qty + 1);
+        dispatch(changeQty(item_id, item_qty + 1));
     }
 
     const removeQty = (item_id, item_qty) => () => {
         if (item_qty > 1)
-            changeQty(item_id, item_qty - 1);
+            dispatch(changeQty(item_id, item_qty - 1));
     }
 
     const removeCartItem = (item_id) => () => {
-        removeItem(item_id)
+        dispatch(removeItem(item_id));
     }
 
     const closePopup = () => {
@@ -32,7 +35,7 @@ const CartDialog = ({ cart_total_price, changeQty, removeItem, closeDialog }) =>
                 <SearchText>Sacola({cart_itens ? cart_itens.length : '0'})</SearchText>
             </CartHeader>
             <ItemList>
-                {cart_itens && cart_itens.map((item) =>{
+                {cart_itens && cart_itens.map((item) => {
                     const actual_price = getNumbers(item.actual_price);
                     const regular_price = getNumbers(item.regular_price);
                     return <div key={item.id}>
@@ -59,7 +62,7 @@ const CartDialog = ({ cart_total_price, changeQty, removeItem, closeDialog }) =>
                 }
                 )}
             </ItemList>
-            <CartTotalValue>Subtotal - {cart_total_price}</CartTotalValue>
+            <CartTotalValue>Subtotal - {total_price}</CartTotalValue>
         </CartContent>
     )
 }
@@ -74,7 +77,6 @@ const CartContent = styled.div`
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     overflow: hidden;
-    margin-bottom: 30px;
 `;
 
 const CartHeader = styled.div`
@@ -204,13 +206,4 @@ const CartTotalValue = styled.div`
     padding: 10px;
 `;
 
-const mapStateToProps = state => ({
-    cart_total_price: state.cartReducer.total_price
-});
-
-const mapDispatchToProps = dispatch => ({
-    changeQty: (item_id, qty) => dispatch(changeQty(item_id, qty)),
-    removeItem: (item_id) => dispatch(removeItem(item_id))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CartDialog);
+export default CartDialog;

@@ -2,24 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 import { FiSearch, FiShoppingBag } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setSearch, showCart } from 'redux/index';
 
-const Header = ({ itens_total_qty, setSearch, showCart }) => {
+const Header = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
+    const {itens_total_qty} = useSelector(state => state.cartReducer)
 
     const onClickLogo = () => {
         history.push("/");
     }
 
     const handleSearchClick = async () => {
-        await showCart(false);
-        setSearch(true);
+        await dispatch(showCart(false));
+        dispatch(setSearch(true));
     }
 
     const handleCartClick = async () => {
-        await setSearch(false);
-        showCart(true);
+        await dispatch(setSearch(false));
+        dispatch(showCart(true));
     }
 
     return (
@@ -118,13 +120,4 @@ const BagCount = styled.div`
     bottom: 15px;
 `;
 
-const mapStateToProps = state => ({
-    itens_total_qty: state.cartReducer.itens_total_qty
-});
-
-const mapDispatchToProps = dispatch => ({
-    setSearch: (value) => dispatch(setSearch(value)),
-    showCart: (value) => dispatch(showCart(value))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

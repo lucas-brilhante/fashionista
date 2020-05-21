@@ -1,17 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FiArrowLeft } from 'react-icons/fi';
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { SearchItem } from 'redux/index';
 import { useHistory } from 'react-router-dom';
 import { getNumbers } from 'utils';
 
-const SearchDialog = ({ itens_searched, SearchItem, closeDialog }) => {
+const SearchDialog = ({ closeDialog }) => {
     const history = useHistory();
+    const dispatch = useDispatch();
+    const { itens_searched } = useSelector(state => state.searchReducer);
 
     const handleSearch = (e) => {
         const item_name = e.target.value;
-        SearchItem(item_name);
+        dispatch(SearchItem(item_name));
     }
 
     const handleItemClick = (item_id) => () => {
@@ -67,6 +69,7 @@ const SerchContent = styled.div`
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     overflow: hidden;
+    padding-bottom: 10px;
 `;
 
 const SearchHeader = styled.div`
@@ -117,7 +120,7 @@ const ItemList = styled.div`
     max-height: 50vh;
     overflow: hidden;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 `;
 
 const Item = styled.div`
@@ -165,12 +168,4 @@ const ItemParcelPrice = styled.span`
     color: #333;
 `;
 
-const mapStateToProps = state => ({
-    itens_searched: state.searchReducer.itens_searched
-});
-
-const mapDispatchToProps = dispatch => ({
-    SearchItem: (item_name) => dispatch(SearchItem(item_name))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchDialog);
+export default SearchDialog;
