@@ -79,8 +79,8 @@ const Item = styled.div`
   overflow: hidden;
 
   &:hover {
-    border: 1px solid rgba(100, 100, 100, 1);
-    margin: 9px; 
+    margin: 9px;
+    border: 1px solid rgba(80, 80, 80, 1); 
   }
 `;
 

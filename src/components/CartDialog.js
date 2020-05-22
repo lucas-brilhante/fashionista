@@ -77,6 +77,17 @@ const CartContent = styled.div`
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     overflow: hidden;
+    animation: drop 0.6s forwards;
+    @keyframes drop {
+        from {
+            transform: translateY(-100%);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(0%);
+            opacity: 1;
+        }
+    }
 `;
 
 const CartHeader = styled.div`

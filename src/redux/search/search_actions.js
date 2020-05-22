@@ -1,9 +1,16 @@
 import { SET_SEARCH, SEARCH_ITENS } from './consts';
 
-export const setSearch = (value) => ({
-    type: SET_SEARCH,
-    payload: value
-})
+export const setSearch = (value) => (dispatch,store) => {
+    const search = store().searchReducer.search_bar;
+
+    if(search === value)
+        return;
+
+    dispatch({
+        type: SET_SEARCH,
+        payload: value
+    })
+}
 
 export const SearchItem = (item_name) => (dispatch,store) => {
     const itens = store().itemReducer;
