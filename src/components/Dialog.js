@@ -19,11 +19,16 @@ const Dialog = ({ component, active, closeDialog }) => {
 
     useEffect(() => {
         const overflow_type = document.body.style.overflow;
+        const position = document.body.style.position;
         if (active){
             document.body.style.overflow = "hidden"
+            document.body.style.position = "fixed"
         }
         
-        return () => document.body.style.overflow = overflow_type;
+        return () => {
+            document.body.style.overflow = overflow_type;
+            document.body.style.position = position;
+        };
     }, [active]);
 
     if (!active)
