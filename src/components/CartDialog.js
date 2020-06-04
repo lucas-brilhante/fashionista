@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FiArrowLeft } from 'react-icons/fi';
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { changeQty, removeItem } from 'store';
 import { getNumbers } from 'utils';
+import { useCart } from 'hooks';
 
 const CartDialog = ({ closeDialog }) => {
     const cart_itens = JSON.parse(localStorage.getItem('@fashionista/cart_itens'));
     const dispatch = useDispatch();
-    const { total_price } = useSelector((state) => state.cartReducer);
+    const { total_price } = useCart();
 
 
     const addQty = (item_id, item_qty) => () => {

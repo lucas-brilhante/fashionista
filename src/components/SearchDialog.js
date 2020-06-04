@@ -1,15 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FiArrowLeft } from 'react-icons/fi';
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { SearchItem } from 'store';
 import { useHistory } from 'react-router-dom';
 import { getNumbers } from 'utils';
+import { useSearch } from 'hooks';
 
 const SearchDialog = ({ closeDialog }) => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const { itens_searched } = useSelector(state => state.searchReducer);
+    const { itens_searched } = useSearch();
 
     const handleSearch = (e) => {
         const item_name = e.target.value;

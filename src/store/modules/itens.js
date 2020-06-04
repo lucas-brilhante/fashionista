@@ -4,7 +4,6 @@ import { getProductId } from 'utils';
 
 //Actions
 const FETCH_ITENS = 'fashionista/itens/FETCH_ITENS';
-const ADD_ITEM = 'fashionista/itens/ADD_ITEM';
 
 //Reducer
 const initialState = [];
@@ -12,9 +11,6 @@ const initialState = [];
 export default createReducer(initialState, {
     [FETCH_ITENS]: (state, action) => {
         return action.payload;
-    },
-    [ADD_ITEM]: (state, action) => {
-        return [...state, action.payload];
     }
 })
 
@@ -35,7 +31,7 @@ export const fetchItens = () => async (dispatch) => {
     })
 }
 
-export const findItem = (item_id) => (dispatch, store) => {
+export const findItem = (item_id) => (_,store) => {
     const item = store().itensReducer.filter((item) => item.id === item_id);
     return item[0];
 }

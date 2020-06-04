@@ -20,7 +20,6 @@ export default createReducer(initialState, {
 })
 
 //Actions Creators
-
 export const showCart = (value) => ({
     type: SHOW_CART,
     payload: value

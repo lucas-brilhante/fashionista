@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Animation = ({ children, active, animation = "fade", duration = 1, zIndex=0 }) => {
     const [render, setRender] = useState(active);
-    console.log('render', active)
+
     useEffect(() => {
         if (active) setRender(true);
     }, [active])

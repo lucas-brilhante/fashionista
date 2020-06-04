@@ -20,10 +20,10 @@ export default createReducer(initialState, {
 })
 
 //Actions Creators
-export const setSearch = (value) => (dispatch, store) => {
-    const search = store().searchReducer.search_bar;
+export const setSearch = (value) => (dispatch,store) => {
+    const { search_bar } = store().searchReducer;
 
-    if (search === value)
+    if (search_bar === value)
         return;
 
     dispatch({

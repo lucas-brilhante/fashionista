@@ -2,13 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { FiSearch, FiShoppingBag } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setSearch, showCart } from 'store';
+import { useCart } from 'hooks';
 
 const Header = () => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const {itens_total_qty} = useSelector(state => state.cartReducer)
+    const { itens_total_qty } = useCart();
 
     const onClickLogo = () => {
         history.push("/");

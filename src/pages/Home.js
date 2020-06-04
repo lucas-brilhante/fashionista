@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 import { getPercentageDiscount, getNumbers } from 'utils';
 import { useHistory } from 'react-router-dom';
+import {useItens} from 'hooks';
 
 const Home = () => {
   const history = useHistory();
-  const itens = useSelector(state => state.itensReducer);
+  const itens = useItens();
 
   const handleClick = (id) => () => {
     history.push(`/product/${id}`)
