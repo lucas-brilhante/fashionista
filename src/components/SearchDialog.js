@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FiArrowLeft } from 'react-icons/fi';
 import { useSelector, useDispatch } from 'react-redux'
-import { SearchItem } from 'redux/index';
+import { SearchItem } from 'store';
 import { useHistory } from 'react-router-dom';
 import { getNumbers } from 'utils';
 
@@ -69,18 +69,7 @@ const SerchContent = styled.div`
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     overflow: hidden;
-    padding-bottom: 10px;
-    animation: drop 0.6s forwards;
-    @keyframes drop {
-        from {
-            transform: translateY(-100%);
-            opacity: 1;
-        }
-        to {
-            transform: translateY(0%);
-            opacity: 1;
-        }
-    }    
+    padding-bottom: 10px;   
 `;
 
 const SearchHeader = styled.div`

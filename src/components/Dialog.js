@@ -1,5 +1,6 @@
 import React, { useEffect, memo } from 'react';
 import styled from 'styled-components';
+import { Animation } from 'components';
 
 const Dialog = ({ component, active, closeDialog }) => {
     const Component = component;
@@ -12,7 +13,7 @@ const Dialog = ({ component, active, closeDialog }) => {
 
         if (active)
             document.addEventListener("keydown", handleKeyPress, false);
-        
+
         return () => document.removeEventListener("keydown", handleKeyPress, false);
 
     }, [active, closeDialog]);
@@ -20,32 +21,33 @@ const Dialog = ({ component, active, closeDialog }) => {
     useEffect(() => {
         const overflow_type = document.body.style.overflow;
         const position = document.body.style.position;
-        if (active){
+        if (active) {
             document.body.style.overflow = "hidden"
-            document.body.style.position = "fixed"
+            //document.body.style.position = "fixed"
         }
-        
+
         return () => {
             document.body.style.overflow = overflow_type;
             document.body.style.position = position;
         };
     }, [active]);
 
-    if (!active)
-        return <div />
-
     const handleClick = () => {
         closeDialog();
     }
 
     return (
-        <DialogContainer>
-            <DialogBackground onClick={handleClick} />
-            <DialogContent>
-                <DummyContainer />
-                <Component closeDialog={closeDialog}/>
-            </DialogContent>
-        </DialogContainer>
+        <Animation active={active} duration={0.6} zIndex={10}>
+            <DialogContainer>
+                <DialogBackground onClick={handleClick} />
+                <DialogContent>
+                    <DummyContainer />
+                    <Animation active={active} duration={0.6} animation="drop">
+                        <Component closeDialog={closeDialog} />
+                    </Animation>
+                </DialogContent>
+            </DialogContainer>
+        </Animation>
     )
 
 }

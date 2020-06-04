@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FiSearch, FiShoppingBag } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSearch, showCart } from 'redux/index';
+import { setSearch, showCart } from 'store';
 
 const Header = () => {
     const history = useHistory();

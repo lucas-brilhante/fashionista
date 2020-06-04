@@ -1,10 +1,8 @@
 import React, { useEffect, Suspense, useCallback, Fragment } from 'react';
-import { Dialog } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSearch, fetchItens, showCart, reloadTotalPrice } from 'redux/index';
+import { setSearch, fetchItens, showCart, reloadTotalPrice } from 'store';
 import styled from 'styled-components';
-import { SearchDialog, CartDialog } from 'components';
-import { Loading, Header } from 'components';
+import { SearchDialog, CartDialog, Dialog, Loading, Header } from 'components';
 
 const Main = ({ children }) => {
     const selector = useSelector(state => state);
@@ -12,7 +10,7 @@ const Main = ({ children }) => {
 
     const { search_bar } = selector.searchReducer;
     const { show_cart } = selector.cartReducer;
-    const itens = selector.itemReducer
+    const itens = selector.itensReducer
 
     useEffect(() => {
         dispatch(fetchItens());

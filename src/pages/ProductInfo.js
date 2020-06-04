@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams, useHistory } from 'react-router-dom';
-import { showCart, findItem, addItemToCard } from 'redux/index';
+import { showCart, findItem, addItemToCard } from 'store';
 import { useDispatch } from 'react-redux';
 import { getNumbers } from 'utils';
 
@@ -31,7 +31,7 @@ const ProductInfo = () => {
         }
         else
             history.push('/not-found');
-    }, [item,history])
+    }, [item, history])
 
     if (item) {
         const { name, image, installments, sizes } = item;

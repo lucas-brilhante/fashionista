@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 const Home = () => {
   const history = useHistory();
-  const itens = useSelector(state => state.itemReducer);
+  const itens = useSelector(state => state.itensReducer);
 
   const handleClick = (id) => () => {
     history.push(`/product/${id}`)

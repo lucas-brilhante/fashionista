@@ -1,5 +1,25 @@
-import { SHOW_CART, SET_TOTAL_PRICE, SET_ITENS_QTY } from './consts';
+import createReducer from '../createReducer';
 import { getNumbers, currencyMask } from 'utils';
+
+//Actions
+const SHOW_CART = 'fashionista/cart/SHOW_CART';
+const SET_TOTAL_PRICE = 'fashionista/cart/SET_TOTAL_PRICE';
+const SET_ITENS_QTY = 'fashionista/cart/SET_ITENS_QTY';
+
+//Reducer
+const initialState = {
+    show_cart: false,
+    total_price: 0,
+    itens_total_qty: 0
+}
+
+export default createReducer(initialState, {
+    [SHOW_CART]: (state, action) => ({ ...state, show_cart: action.payload }),
+    [SET_TOTAL_PRICE]: (state, action) => ({ ...state, total_price: action.payload }),
+    [SET_ITENS_QTY]: (state, action) => ({ ...state, itens_total_qty: action.payload })
+})
+
+//Actions Creators
 
 export const showCart = (value) => ({
     type: SHOW_CART,
