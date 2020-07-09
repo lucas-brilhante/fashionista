@@ -5,18 +5,21 @@ import { getNumbers, currencyMask } from 'utils';
 const SHOW_CART = 'fashionista/cart/SHOW_CART';
 const SET_TOTAL_PRICE = 'fashionista/cart/SET_TOTAL_PRICE';
 const SET_ITENS_QTY = 'fashionista/cart/SET_ITENS_QTY';
+const SET_CART_ITENS = 'fashionista/cart/SET_CART_ITENS';
 
 //Reducer
 const initialState = {
     show_cart: false,
     total_price: 0,
-    itens_total_qty: 0
+    itens_total_qty: 0,
+    cart_itens: []
 }
 
 export default createReducer(initialState, {
     [SHOW_CART]: (state, action) => ({ ...state, show_cart: action.payload }),
     [SET_TOTAL_PRICE]: (state, action) => ({ ...state, total_price: action.payload }),
-    [SET_ITENS_QTY]: (state, action) => ({ ...state, itens_total_qty: action.payload })
+    [SET_ITENS_QTY]: (state, action) => ({ ...state, itens_total_qty: action.payload }),
+    [SET_CART_ITENS]: (state, action) => ({ ...state, cart_itens: action.payload })
 })
 
 //Actions Creators
@@ -25,8 +28,8 @@ export const showCart = (value) => ({
     payload: value
 })
 
-export const changeQty = (item_id, qty) => (dispatch) => {
-    let cart = JSON.parse(localStorage.getItem('@fashionista/cart_itens'));
+export const changeQty = (item_id, qty) => (dispatch,store) => {
+    let cart = store().cartReducer.cart_itens;
 
     if (cart)
         cart = cart.slice();
@@ -37,24 +40,30 @@ export const changeQty = (item_id, qty) => (dispatch) => {
         }
     }
 
-    localStorage.setItem('@fashionista/cart_itens', JSON.stringify(cart));
+    dispatch({
+        type: SET_CART_ITENS,
+        payload: cart
+    })
     dispatch(reloadTotalPrice());
 }
 
-export const removeItem = (item_id) => (dispatch) => {
-    let cart = JSON.parse(localStorage.getItem('@fashionista/cart_itens'));
+export const removeItem = (item_id) => (dispatch, store) => {
+    let cart = store().cartReducer.cart_itens;
 
-    if(cart)
+    if (cart)
         cart = cart.slice().filter((item) => item.id !== item_id);
 
-    localStorage.setItem('@fashionista/cart_itens', JSON.stringify(cart));
+    dispatch({
+        type: SET_CART_ITENS,
+        payload: cart
+    })
     dispatch(reloadTotalPrice());
 
 }
 
-export const addItemToCard = (item, size) => (dispatch) => {
+export const addItemToCard = (item, size) => (dispatch,store) => {
     const id = item.id + '_0_' + size;
-    const cart = JSON.parse(localStorage.getItem('@fashionista/cart_itens'));
+    let cart = store().cartReducer.cart_itens
     let cart_item = null;
 
     if (cart)
@@ -81,12 +90,16 @@ export const addItemToCard = (item, size) => (dispatch) => {
         size,
         qty: 1
     };
-    localStorage.setItem('@fashionista/cart_itens', JSON.stringify(cart?[...cart,item_to_cart]:[item_to_cart]));
+
+    dispatch({
+        type: SET_CART_ITENS,
+        payload: cart ? [...cart, item_to_cart] : [item_to_cart]
+    })
     dispatch(reloadTotalPrice());
 }
 
-export const reloadTotalPrice = () => (dispatch) => {
-    const cart = JSON.parse(localStorage.getItem('@fashionista/cart_itens'));
+export const reloadTotalPrice = () => (dispatch,store) => {
+    let cart = store().cartReducer.cart_itens
     let total_price = 0;
     let total_itens_qty = 0;
 

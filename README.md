@@ -16,14 +16,15 @@ O corpo tem 3 rotas:
 Schema dos produtos:  
 ![](docs/product-schema.png)
 
-O projeto buscou utilizar recursos novos do React, como Hooks, Lazy e Suspense, LocalStorage e algumas outras ferramentas que são muito utilizadas no mercado. Não foi utilizado nenhum framework de UI para fazer os layouts, eles foram feitos do 0 utilizando html, css e styled-components.
+O projeto buscou utilizar recursos novos do React, como Hooks, Lazy e Suspense, LocalStorage, Intl e algumas outras ferramentas que são muito utilizadas no mercado. Não foi utilizado nenhum framework de UI para fazer os layouts, eles foram feitos do 0 utilizando html, css e styled-components.
 
 Os componentes utilizados no projeto foram:
 * Create React App
 * React Router
+* React Icons
 * Redux
 * Redux Thunk
-* React Icons
+* Redux Persist
 * Axios
 * Styled Components
 

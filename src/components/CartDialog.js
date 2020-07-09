@@ -7,9 +7,9 @@ import { getNumbers } from 'utils';
 import { useCart } from 'hooks';
 
 const CartDialog = ({ closeDialog }) => {
-    const cart_itens = JSON.parse(localStorage.getItem('@fashionista/cart_itens'));
+    //const cart_itens = JSON.parse(localStorage.getItem('@fashionista/cart_itens'));
     const dispatch = useDispatch();
-    const { total_price } = useCart();
+    const { total_price, cart_itens } = useCart();
 
 
     const addQty = (item_id, item_qty) => () => {
