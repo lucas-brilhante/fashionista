@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'
 
-const useItens = () => useSelector(state => state.itensReducer);
+const useItens = () => useSelector((state) => state.itensReducer)
 
-export default useItens;
+export default useItens

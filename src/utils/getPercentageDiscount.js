@@ -1,5 +1,5 @@
-const getPercentageDiscount = (value_with_discount, total_value) =>{
-    return parseInt(100 - (100* value_with_discount / total_value));
+const getPercentageDiscount = (valueWithDiscount, totalValue) => {
+  return parseInt(100 - (100 * valueWithDiscount) / totalValue, 10)
 }
 
-export default getPercentageDiscount;
+export default getPercentageDiscount

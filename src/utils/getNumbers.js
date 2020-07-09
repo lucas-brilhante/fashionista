@@ -1,9 +1,7 @@
 const getNumbers = (value) => {
-  const currency = value
-    .replace(/,/g,'.')
-    .replace(/(?!\.)(\D)/g,'');
+  const currency = value.replace(/,/g, '.').replace(/(?!\.)(\D)/g, '')
 
-    return parseFloat(currency);
+  return parseFloat(currency)
 }
 
-export default getNumbers;
+export default getNumbers

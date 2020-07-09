@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'
 
-const useSearch = () => useSelector(state => state.searchReducer);
+const useSearch = () => useSelector((state) => state.searchReducer)
 
-export default useSearch;
+export default useSearch

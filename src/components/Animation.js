@@ -1,67 +1,85 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
-const Animation = ({ children, active, animation = "fade", duration = 1, zIndex=0 }) => {
-    const [render, setRender] = useState(active);
+const Animation = ({
+  children,
+  active,
+  animation = 'fade',
+  duration = 1,
+  zIndex = 0,
+}) => {
+  const [render, setRender] = useState(active)
 
-    useEffect(() => {
-        if (active) setRender(true);
-    }, [active])
+  useEffect(() => {
+    if (active) setRender(true)
+  }, [active])
 
-    const animationEnds = () => {
-        if (!active) setRender(false);
-    }
+  const animationEnds = () => {
+    if (!active) setRender(false)
+  }
 
-    return (render &&
-        <EffectContainer
-            active={active}
-            zIndex={zIndex}
-            animation={animation}
-            duration={duration}
-            onAnimationEnd={animationEnds}>
-            {children}
-        </EffectContainer>
-    );
+  return (
+    render && (
+      <EffectContainer
+        active={active}
+        zIndex={zIndex}
+        animation={animation}
+        duration={duration}
+        onAnimationEnd={animationEnds}
+      >
+        {children}
+      </EffectContainer>
+    )
+  )
 }
 
 const EffectContainer = styled.div`
-    animation:  ${({ active, animation }) => (active ? (animation + "-start") : (animation + "-end"))}
-                ${({ duration }) => duration}s;
-    z-index: ${({zIndex}) => zIndex};
-    @keyframes fade-start {
-        0% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
+  animation: ${({ active, animation }) =>
+      active ? `${animation}-start` : `${animation}-end`}
+    ${({ duration }) => duration}s;
+  z-index: ${({ zIndex }) => zIndex};
+  @keyframes fade-start {
+    0% {
+      opacity: 0;
     }
-    @keyframes fade-end {
-        0% {
-            opacity: 1;
-        }
-        100% {
-            opacity: 0;
-        }
+    100% {
+      opacity: 1;
     }
+  }
+  @keyframes fade-end {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
 
-    @keyframes drop-start {
-        from {
-            transform: translateY(-100%);
-        }
-        to {
-            transform: translateY(0%);
-        }
+  @keyframes drop-start {
+    from {
+      transform: translateY(-100%);
     }
-    @keyframes drop-end {
-        from {
-            transform: translateY(0%);
-        }
-        to {
-            transform: translateY(-100%);
-        }
+    to {
+      transform: translateY(0%);
     }
+  }
+  @keyframes drop-end {
+    from {
+      transform: translateY(0%);
+    }
+    to {
+      transform: translateY(-100%);
+    }
+  }
+`
 
-`;
+Animation.propTypes = {
+  children: PropTypes.node.isRequired,
+  active: PropTypes.bool.isRequired,
+  animation: PropTypes.string.isRequired,
+  duration: PropTypes.number.isRequired,
+  zIndex: PropTypes.number.isRequired,
+}
 
-export default Animation;
+export default Animation

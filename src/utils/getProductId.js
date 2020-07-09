@@ -1,8 +1,8 @@
 const getProductId = (product) => {
-    const id=product.sizes[0].sku
+  const id = product.sizes[0].sku
     .replace(/(?!.*_.*)(.*)/, '')
-    .replace(/(_0_)/, '');
-    return id;
+    .replace(/(_0_)/, '')
+  return id
 }
 
-export default getProductId;
+export default getProductId

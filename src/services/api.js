@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from 'axios'
 
-const api = async() =>{
-    const response = await axios.get('https://undefined.netlify.app/api/catalog');
-    return response.data;
+const api = async () => {
+  const response = await axios.get('https://undefined.netlify.app/api/catalog')
+  return response.data
 }
-export default api;
+export default api

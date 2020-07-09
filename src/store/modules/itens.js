@@ -1,37 +1,34 @@
-import createReducer from '../createReducer';
-import { api } from 'services';
-import { getProductId } from 'utils';
+import { api } from 'services'
+import { getProductId } from 'utils'
+import createReducer from '../createReducer'
 
-//Actions
-const FETCH_ITENS = 'fashionista/itens/FETCH_ITENS';
+// Actions
+const FETCH_ITENS = 'fashionista/itens/FETCH_ITENS'
 
-//Reducer
-const initialState = [];
+// Reducer
+const initialState = []
 
 export default createReducer(initialState, {
-    [FETCH_ITENS]: (state, action) => {
-        return action.payload;
-    }
+  [FETCH_ITENS]: (state, action) => {
+    return action.payload
+  },
 })
 
-//Actions Creators
+// Actions Creators
 export const fetchItens = () => async (dispatch) => {
-    const itens_array = [];
-    const itens = await api();
+  const itens = await api()
+  const itensArray = itens.map((item) => ({
+    id: getProductId(item),
+    ...item,
+  }))
 
-    for (let item of itens) {
-        itens_array.push({
-            id: getProductId(item),
-            ...item
-        })
-    }
-    dispatch({
-        type: FETCH_ITENS,
-        payload: itens_array.slice()
-    })
+  dispatch({
+    type: FETCH_ITENS,
+    payload: itensArray.slice(),
+  })
 }
 
-export const findItem = (item_id) => (_,store) => {
-    const item = store().itensReducer.filter((item) => item.id === item_id);
-    return item[0];
+export const findItem = (itemId) => (_, store) => {
+  const item = store().itensReducer.filter((item_) => item_.id === itemId)
+  return item[0]
 }
