@@ -4,30 +4,35 @@ import products from './mocks/products.json';
 
 store.getState().itensReducer = products; //load itens from mock
 
+const getItem = (index) => store.getState().itensReducer[index];
+
 it('SearchItem("ves") should find the itens with name VESTIDO FRANZIDO RECORTES and VESTIDO CURTO FESTIVAL!', () => {
     // VESTIDO FRANZIDO RECORTES and VESTIDO CURTO FESTIVAL array positions
-    const expected_result = [store.getState().itensReducer[0], store.getState().itensReducer[6]]
+    const expected_result = [
+        getItem(0),
+        getItem(6)
+    ]
     store.dispatch(SearchItem('ves'));
     const result = store.getState().searchReducer.itens_searched;
     expect(result).toEqual(expected_result);
 })
 
 it('SearchItem("cas") should find the item with name CASACO WHITE FUR!', () => {
-    const expected_result = [store.getState().itensReducer[5]] // CASACO WHITE FUR array position 
+    const expected_result = [getItem(5)] // CASACO WHITE FUR array position 
     store.dispatch(SearchItem('cas'));
     const result = store.getState().searchReducer.itens_searched;
     expect(result).toEqual(expected_result);
 })
 
 it('SearchItem("cas     ") should find the item with name CASACO WHITE FUR!', () => {
-    const expected_result = [store.getState().itensReducer[5]] // CASACO WHITE FUR array position 
+    const expected_result = [getItem(5)] // CASACO WHITE FUR array position 
     store.dispatch(SearchItem('cas     '));
     const result = store.getState().searchReducer.itens_searched;
     expect(result).toEqual(expected_result);
 })
 
 it('SearchItem("     cas     ") should find the item with name CASACO WHITE FUR!', () => {
-    const expected_result = [store.getState().itensReducer[5]] // CASACO WHITE FUR array position 
+    const expected_result = [getItem(5)] // CASACO WHITE FUR array position 
     store.dispatch(SearchItem('     cas     '));
     const result = store.getState().searchReducer.itens_searched;
     expect(result).toEqual(expected_result);

@@ -6,6 +6,7 @@ const SHOW_CART = 'fashionista/cart/SHOW_CART';
 const SET_TOTAL_PRICE = 'fashionista/cart/SET_TOTAL_PRICE';
 const SET_ITENS_QTY = 'fashionista/cart/SET_ITENS_QTY';
 const SET_CART_ITENS = 'fashionista/cart/SET_CART_ITENS';
+const RESET_CART = 'fashionista/cart/RESET_CART'
 
 //Reducer
 const initialState = {
@@ -19,7 +20,8 @@ export default createReducer(initialState, {
     [SHOW_CART]: (state, action) => ({ ...state, show_cart: action.payload }),
     [SET_TOTAL_PRICE]: (state, action) => ({ ...state, total_price: action.payload }),
     [SET_ITENS_QTY]: (state, action) => ({ ...state, itens_total_qty: action.payload }),
-    [SET_CART_ITENS]: (state, action) => ({ ...state, cart_itens: action.payload })
+    [SET_CART_ITENS]: (state, action) => ({ ...state, cart_itens: action.payload }),
+    [RESET_CART]: (state, action) => initialState
 })
 
 //Actions Creators
@@ -27,6 +29,11 @@ export const showCart = (value) => ({
     type: SHOW_CART,
     payload: value
 })
+
+export const resetCart = () =>({
+    type: RESET_CART
+})
+
 
 export const changeQty = (item_id, qty) => (dispatch,store) => {
     let cart = store().cartReducer.cart_itens;
