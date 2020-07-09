@@ -2,13 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-const Animation = ({
-  children,
-  active,
-  animation = 'fade',
-  duration = 1,
-  zIndex = 0,
-}) => {
+const Animation = ({ children, active, animation, duration, zIndex }) => {
   const [render, setRender] = useState(active)
 
   useEffect(() => {
@@ -77,9 +71,15 @@ const EffectContainer = styled.div`
 Animation.propTypes = {
   children: PropTypes.node.isRequired,
   active: PropTypes.bool.isRequired,
-  animation: PropTypes.string.isRequired,
-  duration: PropTypes.number.isRequired,
-  zIndex: PropTypes.number.isRequired,
+  animation: PropTypes.string,
+  duration: PropTypes.number,
+  zIndex: PropTypes.number,
+}
+
+Animation.defaultProps = {
+  zIndex: 0,
+  animation: 'fade',
+  duration: 1,
 }
 
 export default Animation

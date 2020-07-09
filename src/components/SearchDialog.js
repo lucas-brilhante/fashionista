@@ -184,7 +184,7 @@ const ItemParcelPrice = styled.span`
   color: #333;
 `
 SearchDialog.propTypes = {
-  closeDialog: PropTypes.node.isRequired,
+  closeDialog: PropTypes.func.isRequired,
 }
 
 export default SearchDialog

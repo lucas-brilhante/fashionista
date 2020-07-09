@@ -89,7 +89,7 @@ const DialogContent = styled.div`
 `
 
 Dialog.propTypes = {
-  component: PropTypes.node.isRequired,
+  component: PropTypes.func.isRequired,
   active: PropTypes.bool.isRequired,
   closeDialog: PropTypes.func.isRequired,
 }

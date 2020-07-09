@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-const Loading = ({ message = 'Carregando' }) => {
+const Loading = ({ message }) => {
   const [points, setPoints] = useState('')
 
   useEffect(() => {
@@ -43,7 +43,11 @@ const DummyContainer = styled.div`
 `
 
 Loading.propTypes = {
-  message: PropTypes.string.isRequired,
+  message: PropTypes.string,
+}
+
+Loading.defaultProps = {
+  message: 'Carregando',
 }
 
 export default Loading
