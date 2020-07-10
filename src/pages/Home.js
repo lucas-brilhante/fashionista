@@ -4,6 +4,8 @@ import { getPercentageDiscount, getNumbers } from 'utils'
 import { useHistory } from 'react-router-dom'
 import { useItens } from 'hooks'
 
+// Home Page - Show products infos like name, price, image, promotions, etc
+
 const Home = () => {
   const history = useHistory()
   const itens = useItens()

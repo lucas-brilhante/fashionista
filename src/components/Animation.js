@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
+// Execute a animation when the component is mounted or unmounted
+
 const Animation = ({ children, active, animation, duration, zIndex }) => {
   const [render, setRender] = useState(active)
 

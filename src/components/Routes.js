@@ -6,6 +6,8 @@ const Home = lazy(() => import('pages/Home'))
 const ProductInfo = lazy(() => import('pages/ProductInfo'))
 const NotFound = lazy(() => import('pages/NotFound'))
 
+// Handle Routes
+
 const Routes = () => {
   return (
     <Main>

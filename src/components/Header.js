@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux'
 import { setSearch, showCart } from 'store'
 import { useCart } from 'hooks'
 
+// Header with some functionality: open Search or Cart Modal
+
 const Header = () => {
   const history = useHistory()
   const dispatch = useDispatch()

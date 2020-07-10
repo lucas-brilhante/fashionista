@@ -7,6 +7,9 @@ import { getNumbers } from 'utils'
 import { useCart } from 'hooks'
 import PropTypes from 'prop-types'
 
+// Cart modal for users see the products wich was added
+// Users can modify the quantity or remove a product
+
 const CartDialog = ({ closeDialog }) => {
   const dispatch = useDispatch()
   const { total_price: totalPrice, cart_itens: cartItens } = useCart()

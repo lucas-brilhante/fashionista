@@ -5,6 +5,8 @@ import { store, persistor } from 'store'
 import Routes from 'components/Routes'
 import { PersistGate } from 'redux-persist/integration/react'
 
+// Wrap all application with Redux Provider, BrowserRouter and PersistGate
+
 const App = () => {
   return (
     <Provider store={store}>

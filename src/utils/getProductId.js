@@ -1,3 +1,4 @@
+// Get product id from product sku
 const getProductId = (product) => {
   const id = product.sizes[0].sku
     .replace(/(?!.*_.*)(.*)/, '')

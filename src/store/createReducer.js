@@ -1,3 +1,5 @@
+// Function to reduce boilerplate when create a Reducer
+
 function createReducer(initialState, handlers) {
   return function reducer(state = initialState, action) {
     if (Object.prototype.hasOwnProperty.call(handlers, action.type)) {

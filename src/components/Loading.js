@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
+// Show 'Loading . . .' message when API is fetching
+
 const Loading = ({ message }) => {
   const [points, setPoints] = useState('')
 

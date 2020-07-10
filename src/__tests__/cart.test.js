@@ -66,7 +66,7 @@ it('Add 1x CALÇA COMFORT TASSEL then change quantity for 4', () => {
   ]
   // Add CALÇA COMFORT TASSEL(size: 40) then change quantity to 4
   store.dispatch(addItemToCard(getItem(1), '40'))
-  store.dispatch(changeQty('4029_259_0_40', 4))
+  store.dispatch(changeQty(4, 0)) // CALÇA COMFORT TASSEL index: 0
   const result = store.getState().cartReducer.cart_itens
   expect(result).toEqual(expectedResult)
 })
@@ -81,10 +81,10 @@ it('Add 2x SAIA DENIM BOTÕES(size: 42) and 3x SAIA DENIM BOTÕES(size: 40) then
   ]
   // Add SAIA DENIM BOTÕES(size: 42, id: 3787_233_0_42) then change quantity to 2
   store.dispatch(addItemToCard(getItem(2), '42'))
-  store.dispatch(changeQty('3787_233_0_42', 2))
+  store.dispatch(changeQty(2, 0)) // SAIA DENIM BOTÕES(size 42) index: 0
   // Add SAIA DENIM BOTÕES(size: 40, id: 3787_233_0_42) then change quantity to 3
   store.dispatch(addItemToCard(getItem(2), '40'))
-  store.dispatch(changeQty('3787_233_0_40', 3))
+  store.dispatch(changeQty(3, 1)) // SAIA DENIM BOTÕES(size 40) index: 1
   // Remove SAIA DENIM BOTÕES(size: 42, id: 3787_233_0_42)
   store.dispatch(removeItem('3787_233_0_42'))
   const result = store.getState().cartReducer.cart_itens
@@ -96,11 +96,11 @@ it('Add 3x VESTIDO FRANZIDO RECORTES to cart should return quantity 3', () => {
   const expectedResult = currencyMask(1369.2)
   // Add BLUSA LAÇO ISTAMBUL(size: PP) then change quantity to 4 - R$ 599,60
   store.dispatch(addItemToCard(getItem(3), 'PP'))
-  store.dispatch(changeQty('5789_311_0_PP', 4))
+  store.dispatch(changeQty(4, 0)) // BLUSA LAÇO ISTAMBUL(size PP) index: 0
 
   // Add CASACO WHITE FUR(size: M) then change quantity to 3 - R$ 719,70
   store.dispatch(addItemToCard(getItem(5), 'M'))
-  store.dispatch(changeQty('5891_1000058_0_M', 3))
+  store.dispatch(changeQty(3, 1)) // CASACO WHITE FUR(size: M) inxed: 1
 
   // Add ÓCULOS DE SOL BOLD - R$109,90 but it's in promotion, so R$ 49,90
   store.dispatch(addItemToCard(getItem(7), 'U'))

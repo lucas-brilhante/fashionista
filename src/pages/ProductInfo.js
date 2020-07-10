@@ -5,6 +5,8 @@ import { showCart, findItem, addItemToCard } from 'store'
 import { useDispatch } from 'react-redux'
 import { getNumbers } from 'utils'
 
+// Product Info - Show Product Info, price, installments, sizes available and a button to add this item to cart.
+
 const ProductInfo = () => {
   const history = useHistory()
   const dispatch = useDispatch()

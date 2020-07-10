@@ -7,6 +7,8 @@ import Dialog from 'components/Dialog'
 import { useSearch, useItens, useCart } from 'hooks'
 import PropTypes from 'prop-types'
 
+// Display the body of application
+
 const Main = ({ children }) => {
   const dispatch = useDispatch()
   const { search_bar: searchBar } = useSearch()

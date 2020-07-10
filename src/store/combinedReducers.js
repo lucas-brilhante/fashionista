@@ -5,6 +5,8 @@ import itensReducer from './modules/itens'
 import searchReducer from './modules/search'
 import cartReducer from './modules/cart'
 
+// Combine reducers and apply Redux Persist on cartReducer saving only cart_itens variable on LocalStorage.
+
 const persistConfig = {
   key: 'fashionista',
   storage,

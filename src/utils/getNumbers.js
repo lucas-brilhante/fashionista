@@ -1,3 +1,4 @@
+// Uses Regex to get only numbers of a string
 const getNumbers = (value) => {
   const currency = value.replace(/,/g, '.').replace(/(?!\.)(\D)/g, '')
 

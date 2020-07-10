@@ -8,6 +8,8 @@ import { getNumbers } from 'utils'
 import { useSearch } from 'hooks'
 import PropTypes from 'prop-types'
 
+// Search Modal for users filter products
+
 const SearchDialog = ({ closeDialog }) => {
   const history = useHistory()
   const dispatch = useDispatch()

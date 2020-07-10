@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+// Not Found - Display a message when some route doesn't match with existents routes
+
 const NotFound = () => (
   <NotFoundContainer>
     <h1>Página não encontrada</h1>

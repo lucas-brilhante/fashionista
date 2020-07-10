@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { Animation } from 'components'
 import PropTypes from 'prop-types'
 
+// Create a modal
+
 const Dialog = ({ component, active, closeDialog }) => {
   const Component = component
 

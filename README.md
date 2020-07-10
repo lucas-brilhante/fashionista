@@ -9,33 +9,41 @@ O cabeçãrio serve para navegar para a página inicial, abrir a Busca e abrir a
 O modal de Busca serve para filtrar os produtos em tempo real.  
 O modal da Sacola serve para realizar ações, como aumentar/diminuir a quantidade ou remover um produto.  
 O corpo tem 3 rotas:
-* página inicial - mostra todos os produtos do catálogo, exibindo seus preços, sua imagem, seu preço promocional(se estiver em promoção) e a % de desconto.
-* página do produto - mostra as informações do produto, quantidade de parcelamentos, tamanhos disponíveis e a ação de adicionar o item na sacola.
-* página not-found - qualquer rota que for digitada errado no navegador, será direcionado para essa página.
+
+- página inicial - mostra todos os produtos do catálogo, exibindo seus preços, sua imagem, seu preço promocional(se estiver em promoção) e a % de desconto.
+- página do produto - mostra as informações do produto, quantidade de parcelamentos, tamanhos disponíveis e a ação de adicionar o item na sacola.
+- página not-found - qualquer rota que for digitada errado no navegador, será direcionado para essa página.
 
 Schema dos produtos:  
 ![](docs/product-schema.png)
 
-O projeto buscou utilizar recursos novos do React, como Hooks, Lazy e Suspense, LocalStorage, Intl e algumas outras ferramentas que são muito utilizadas no mercado. Não foi utilizado nenhum framework de UI para fazer os layouts, eles foram feitos do 0 utilizando html, css e styled-components.
+O projeto buscou utilizar recursos novos do React, como Hooks, Lazy e Suspense, LocalStorage, Intl e algumas outras ferramentas que são muito utilizadas no mercado. Não foi utilizado nenhum framework de UI para fazer os layouts, eles foram feitos do 0 utilizando html, css e styled-components.  
+O código está padronizado de acordo com o linter da AirBnB e foram realizados testes automatizados nas ações da Aplicação: busca, adição de produto ao carrinho, troca de quantidade de produto, remoção do produto e no cálculo do preço total do carrinho.
 
 Os componentes utilizados no projeto foram:
-* Create React App
-* React Router
-* React Icons
-* Redux
-* Redux Thunk
-* Redux Persist
-* Axios
-* Styled Components
+
+- Create React App
+- React Router
+- React Icons
+- Redux
+- Redux Thunk
+- Redux Persist
+- Axios
+- Styled Components
+- Prop-types
+- Eslint
+- Prettier
+- Jest
 
 ## Estrutura do Projeto
+
 ![](docs/project-structure.png)
 
-* components - Componentes da aplicação.  
-* hooks - Hooks personalisados.  
-* pages - Conjunto de componentes que serão exibidos em uma determinada rota.  
-* service - Consome o Json fornecido pela API.  
-* store - Gerenciamento de estados globais utilizando Redux.  
-* utils - Algumas funções que foram criadas para manipulação de strings.  
+- components - Componentes da aplicação.
+- hooks - Hooks personalisados.
+- pages - Conjunto de componentes que serão exibidos em uma determinada rota.
+- service - Consome o Json fornecido pela API.
+- store - Gerenciamento de estados globais utilizando Redux.
+- utils - Algumas funções que foram criadas para manipulação de strings.
 
-### obs: As variáveis do redux foram organizadas com o Duck Pattern(https://github.com/erikras/ducks-modular-redux) 
+### obs: As variáveis do redux foram organizadas com o Duck Pattern(https://github.com/erikras/ducks-modular-redux)
